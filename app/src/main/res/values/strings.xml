@@ -1,3 +1,7 @@
 <resources>
-    <string name="app_name">SistemaAlumnosV2</string>
+    <string name="app_name">SistemaAlumnos</string>
+    
+    <string name="bottom_search">Buscar Alumno</string>
+    <string name="bottom_student">Ingresar Alumno</string>
+    <string name="bottom_grade">Ingresar Nota</string>
 </resources>
