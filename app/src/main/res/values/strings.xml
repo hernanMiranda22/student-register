@@ -1,7 +1,21 @@
 <resources>
     <string name="app_name">SistemaAlumnos</string>
-    
+
     <string name="bottom_search">Buscar Alumno</string>
     <string name="bottom_student">Ingresar Alumno</string>
     <string name="bottom_grade">Ingresar Nota</string>
+
+    <string name="description_icon_add">PersonAddIcon</string>
+    
+    <string name="inputTextDni">DNI</string>
+    <string name="inputTextName">Nombre</string>
+    <string name="inputTextSurname">Apellido</string>
+    <string name="inputTextGrade">Grado</string>
+
+    <string name="helperInputDni">Sin puntos</string>
+
+    <string name="helperError">Error</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

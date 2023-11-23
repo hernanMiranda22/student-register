@@ -2,19 +2,19 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:id="@+id/InfoStudent"
+        android:id="@+id/btnInfoStudent"
         android:enabled="true"
         android:icon="@drawable/ic_person_add"
         android:title="@string/bottom_student"
         app:showAsAction="ifRoom" />
     <item
-        android:id="@+id/SearchStudent"
+        android:id="@+id/btnSearchStudent"
         android:enabled="true"
         android:icon="@drawable/ic_search"
         android:title="@string/bottom_search"
         app:showAsAction="ifRoom" />
     <item
-        android:id="@+id/GradeStudent"
+        android:id="@+id/btnGradeStudent"
         android:enabled="true"
         android:icon="@drawable/ic_grade_add"
         android:title="@string/bottom_grade"
