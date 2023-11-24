@@ -10,8 +10,8 @@
     <string name="inputTextDni">DNI</string>
     <string name="inputTextName">Nombre</string>
     <string name="inputTextSurname">Apellido</string>
-    <string name="inputTextGrade">Grado</string>
-
+    <string name="inputTextYear">Grado</string>
+    <string name="inputTextGrade">Nota</string>
     <string name="helperInputDni">Sin puntos</string>
     <string name="helperError">Error</string>
 
