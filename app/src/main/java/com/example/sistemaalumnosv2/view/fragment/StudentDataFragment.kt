@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
 import android.widget.EditText
+import android.widget.SearchView
 import com.example.sistemaalumnosv2.R
 import com.google.android.material.textfield.MaterialAutoCompleteTextView
 

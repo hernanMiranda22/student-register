@@ -25,6 +25,10 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:hint="@string/inputTextDni"
+        app:counterEnabled="true"
+        app:counterMaxLength="8"
+        app:endIconMode="clear_text"
+        app:errorEnabled="true"
         app:helperText="@string/helperInputDni"
         app:helperTextEnabled="true"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -32,21 +36,16 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ivIconAdd"
         app:layout_constraintVertical_bias="0.02"
-        app:startIconContentDescription="@string/inputTextDni"
-        app:endIconMode="clear_text"
-        app:counterEnabled="true"
-        app:counterMaxLength="8"
-        app:errorEnabled="true">
+        app:startIconContentDescription="@string/inputTextDni">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/etDni"
-            android:inputType="number"
-            android:maxLength="8"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            android:maxLength="8" />
 
     </com.google.android.material.textfield.TextInputLayout>
-
 
 
     <com.google.android.material.textfield.TextInputLayout
@@ -54,22 +53,21 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:hint="@string/inputTextName"
+        app:counterEnabled="true"
+        app:counterMaxLength="20"
+        app:endIconMode="clear_text"
+        app:errorEnabled="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tiDni"
-        app:layout_constraintVertical_bias="0.02"
-        app:counterEnabled="true"
-        app:counterMaxLength="20"
-        app:errorEnabled="true"
-        >
+        app:layout_constraintVertical_bias="0.02">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/etName"
-            android:maxLength="20"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            />
+            android:maxLength="20" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -79,22 +77,21 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:hint="@string/inputTextSurname"
+        app:counterEnabled="true"
+        app:counterMaxLength="20"
+        app:endIconMode="clear_text"
+        app:errorEnabled="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tiNombre"
-        app:layout_constraintVertical_bias="0.02"
-        app:counterEnabled="true"
-        app:counterMaxLength="20"
-        app:errorEnabled="true"
-        >
+        app:layout_constraintVertical_bias="0.02">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/etSurname"
-            android:maxLength="20"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            />
+            android:maxLength="20" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -119,5 +116,18 @@
             />
 
     </com.google.android.material.textfield.TextInputLayout>
+
+    <Button
+        android:id="@+id/btnSaveData"
+        android:layout_width="0dp"
+        android:layout_height="60dp"
+        android:hint="@string/buttonSaveData"
+        android:textColorHint="#FFFFFF"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/menu"
+        app:layout_constraintVertical_bias="0.05" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

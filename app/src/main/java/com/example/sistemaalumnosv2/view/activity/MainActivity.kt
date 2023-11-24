@@ -4,8 +4,10 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.fragment.app.add
 import androidx.fragment.app.commit
+import androidx.fragment.app.replace
 import com.example.sistemaalumnosv2.R
 import com.example.sistemaalumnosv2.databinding.ActivityMainBinding
+import com.example.sistemaalumnosv2.view.fragment.OperationFragment
 import com.example.sistemaalumnosv2.view.fragment.StudentDataFragment
 
 class MainActivity : AppCompatActivity() {
@@ -29,11 +31,17 @@ class MainActivity : AppCompatActivity() {
         binding.btmNavigation.setOnItemSelectedListener {
             when(it.itemId){
                 R.id.btnInfoStudent ->{
-
+                    supportFragmentManager.commit{
+                        setReorderingAllowed(true)
+                        replace<StudentDataFragment>(R.id.fcvMain)
+                    }
                     true
                 }
                 R.id.btnSearchStudent ->{
-
+                    supportFragmentManager.commit{
+                        setReorderingAllowed(true)
+                        replace<OperationFragment>(R.id.fcvMain)
+                    }
                     true
                 }
                 R.id.btnGradeStudent ->{
