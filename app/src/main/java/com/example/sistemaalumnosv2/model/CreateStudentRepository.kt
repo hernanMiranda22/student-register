@@ -24,9 +24,11 @@ class CreateStudentRepository:CreateStudent {
         CoroutineScope(Dispatchers.IO).launch {
 
             val studentMap = hashMapOf(
+                "DNI" to dni,
                 "Nombre" to name,
                 "Apellido" to surname,
-                "Curso" to year
+                "Curso" to year,
+                "Nota" to 0
             )
 
             fireStore.collection("Student").document(dni.toString())
