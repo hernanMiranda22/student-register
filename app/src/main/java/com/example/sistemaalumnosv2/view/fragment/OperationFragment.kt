@@ -1,7 +1,9 @@
 package com.example.sistemaalumnosv2.view.fragment
 
 import android.annotation.SuppressLint
+import android.content.ContentValues.TAG
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.MotionEvent
@@ -15,6 +17,7 @@ import com.example.sistemaalumnosv2.R
 import com.example.sistemaalumnosv2.databinding.FragmentOperationBinding
 import com.example.sistemaalumnosv2.model.DataStudent
 import com.example.sistemaalumnosv2.view.activity.MainActivity
+import com.example.sistemaalumnosv2.view.adapter.CallBackText
 import com.example.sistemaalumnosv2.view.adapter.OperationAdapter
 import com.example.sistemaalumnosv2.viewmodel.ViewModelOperation
 
@@ -26,6 +29,8 @@ class OperationFragment : Fragment() {
     private val viewModelOperation : ViewModelOperation by viewModels()
 
     private lateinit var adapter : OperationAdapter
+
+    private var itemAdapter = 0
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -50,6 +55,7 @@ class OperationFragment : Fragment() {
         binding.tiContainerDni.setEndIconOnClickListener {
             searchStudent()
         }
+
     }
 
 
@@ -72,10 +78,28 @@ class OperationFragment : Fragment() {
         }
     }
 
-    private fun initRecyclerView(){
-        adapter = OperationAdapter(activity as MainActivity)
+    private fun initRecyclerView() {
+        adapter = OperationAdapter(itemAdapter, activity as MainActivity, object : CallBackText {
+            //Obtiene el contenido del EditText del RecyclerView después de que cambie su valor.
+            override fun textChangeExercise(position: Int, grade: String) {
+                itemAdapter = grade.toInt()
+
+                //Después de obtener el valor del EditText, se llama al onClick del boton "Ingresar nota" y se actualiza el campo "Nota" en FireStore
+                adapter.setOnClickListener(object : OperationAdapter.OnClickListener {
+                    override fun onClick(position: Int, gradeStudent: Int) {
+                        val dni = binding.etDni.text.toString()
+
+                        viewModelOperation.insertGrade(itemAdapter, dni.toInt())
+                            .observe(viewLifecycleOwner, Observer {
+                                if (it != null) {
+                                    Toast.makeText(activity as MainActivity, "Nota ingresada", Toast.LENGTH_SHORT).show()
+                                }
+                            })
+                    }
+                })
+            }
+        })
         binding.rvCardStudent.layoutManager = LinearLayoutManager(activity as MainActivity)
         binding.rvCardStudent.adapter = adapter
     }
-
 }
