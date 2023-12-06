@@ -1,4 +1,4 @@
-package com.example.sistemaalumnosv2.view.adapter
+package com.example.sistemaalumnosv2.presentation.view.adapter
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -11,7 +11,7 @@ import android.widget.EditText
 import androidx.recyclerview.widget.RecyclerView
 import com.example.sistemaalumnosv2.R
 import com.example.sistemaalumnosv2.databinding.CardViewBinding
-import com.example.sistemaalumnosv2.model.DataStudent
+import com.example.sistemaalumnosv2.data.DataStudent
 
 class OperationAdapter(private  val item : Int ,private val context:Context, val callBackText: CallBackText): RecyclerView.Adapter<OperationAdapter.ViewHolder>() {
 
@@ -47,13 +47,13 @@ class OperationAdapter(private  val item : Int ,private val context:Context, val
         }
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): OperationAdapter.ViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
        val view = LayoutInflater.from(parent.context).inflate(R.layout.card_view, parent, false)
 
         return ViewHolder(view)
     }
 
-    override fun onBindViewHolder(holder: OperationAdapter.ViewHolder, @SuppressLint("RecyclerView") position: Int) {
+    override fun onBindViewHolder(holder: ViewHolder, @SuppressLint("RecyclerView") position: Int) {
         val student = dataList[position]
 
         holder.bind(student)

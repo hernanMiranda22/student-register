@@ -1,17 +1,13 @@
 package com.example.sistemaalumnosv2.model
 
-import android.content.ContentValues.TAG
-import android.provider.ContactsContract.Data
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.google.firebase.firestore.FirebaseFirestore
+import com.example.sistemaalumnosv2.data.DataStudent
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 class SearchStudentRepository:SearchStudent {
 

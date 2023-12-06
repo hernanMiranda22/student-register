@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".view.activity.MainActivity"
+    tools:context=".presentation.view.activity.MainActivity"
     android:background="#FFF">
 
     <!-- TODO: Update blank fragment layout -->
@@ -130,5 +130,17 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/menu"
         app:layout_constraintVertical_bias="0.05" />
+
+    <com.google.android.material.progressindicator.CircularProgressIndicator
+        android:id="@+id/piInsert"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:indeterminate="true"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/btnSaveData"
+        app:layout_constraintVertical_bias="0.05"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

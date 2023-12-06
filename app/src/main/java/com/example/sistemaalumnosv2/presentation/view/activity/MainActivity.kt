@@ -1,4 +1,4 @@
-package com.example.sistemaalumnosv2.view.activity
+package com.example.sistemaalumnosv2.presentation.view.activity
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -7,8 +7,8 @@ import androidx.fragment.app.commit
 import androidx.fragment.app.replace
 import com.example.sistemaalumnosv2.R
 import com.example.sistemaalumnosv2.databinding.ActivityMainBinding
-import com.example.sistemaalumnosv2.view.fragment.OperationFragment
-import com.example.sistemaalumnosv2.view.fragment.StudentDataFragment
+import com.example.sistemaalumnosv2.presentation.view.fragment.OperationFragment
+import com.example.sistemaalumnosv2.presentation.view.fragment.StudentDataFragment
 
 class MainActivity : AppCompatActivity() {
 

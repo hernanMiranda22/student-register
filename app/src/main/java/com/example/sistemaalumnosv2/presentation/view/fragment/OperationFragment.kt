@@ -1,12 +1,9 @@
-package com.example.sistemaalumnosv2.view.fragment
+package com.example.sistemaalumnosv2.presentation.view.fragment
 
 import android.annotation.SuppressLint
-import android.content.ContentValues.TAG
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
-import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
@@ -15,11 +12,10 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.sistemaalumnosv2.R
 import com.example.sistemaalumnosv2.databinding.FragmentOperationBinding
-import com.example.sistemaalumnosv2.model.DataStudent
-import com.example.sistemaalumnosv2.view.activity.MainActivity
-import com.example.sistemaalumnosv2.view.adapter.CallBackText
-import com.example.sistemaalumnosv2.view.adapter.OperationAdapter
-import com.example.sistemaalumnosv2.viewmodel.ViewModelOperation
+import com.example.sistemaalumnosv2.presentation.view.activity.MainActivity
+import com.example.sistemaalumnosv2.presentation.view.adapter.CallBackText
+import com.example.sistemaalumnosv2.presentation.view.adapter.OperationAdapter
+import com.example.sistemaalumnosv2.presentation.viewmodel.ViewModelOperation
 
 class OperationFragment : Fragment() {
 

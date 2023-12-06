@@ -1,4 +1,4 @@
-package com.example.sistemaalumnosv2.model
+package com.example.sistemaalumnosv2.data
 
 import com.google.gson.annotations.SerializedName
 

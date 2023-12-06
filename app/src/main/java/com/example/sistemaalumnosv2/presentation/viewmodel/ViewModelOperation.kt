@@ -1,10 +1,10 @@
-package com.example.sistemaalumnosv2.viewmodel
+package com.example.sistemaalumnosv2.presentation.viewmodel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.sistemaalumnosv2.model.DataStudent
+import com.example.sistemaalumnosv2.data.DataStudent
 import com.example.sistemaalumnosv2.model.InsertGrade
 import com.example.sistemaalumnosv2.model.InsertGradeRepository
 import com.example.sistemaalumnosv2.model.SearchStudent

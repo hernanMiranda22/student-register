@@ -1,4 +1,4 @@
-package com.example.sistemaalumnosv2.view.fragment
+package com.example.sistemaalumnosv2.presentation.view.fragment
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -12,10 +12,17 @@ import android.widget.SearchView
 import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import com.example.sistemaalumnosv2.R
+import com.example.sistemaalumnosv2.data.Student
+import com.example.sistemaalumnosv2.data.network.InsertStudentRepoImpl
 import com.example.sistemaalumnosv2.databinding.FragmentStudenDataBinding
-import com.example.sistemaalumnosv2.view.activity.MainActivity
-import com.example.sistemaalumnosv2.viewmodel.ViewModelStudent
+import com.example.sistemaalumnosv2.domain.InsertUseCaseImpl
+import com.example.sistemaalumnosv2.presentation.view.activity.MainActivity
+import com.example.sistemaalumnosv2.presentation.viewmodel.ViewModelStudent
+import com.example.sistemaalumnosv2.presentation.viewmodel.ViewModelStudentFactory
+import com.example.sistemaalumnosv2.vo.Resource
 import com.google.android.material.textfield.MaterialAutoCompleteTextView
 
 class StudentDataFragment : Fragment() {
@@ -24,7 +31,9 @@ class StudentDataFragment : Fragment() {
     private var _binding : FragmentStudenDataBinding? = null
     private val binding get() = _binding!!
 
-    private val viewModelStudent : ViewModelStudent by viewModels()
+    //private val viewModelStudent : ViewModelStudent by viewModels()
+
+    private val viewModelStudent by lazy { ViewModelProvider(this, ViewModelStudentFactory(InsertUseCaseImpl(InsertStudentRepoImpl())))[ViewModelStudent::class.java] }
 
     private var _year = ""
 
@@ -46,6 +55,8 @@ class StudentDataFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
 
+
+
         dropMenu()
 
         getYear()
@@ -55,7 +66,7 @@ class StudentDataFragment : Fragment() {
         }
 
         binding.btnSaveData.setOnClickListener {
-            createStudent()
+            observeInsert()
         }
 
     }
@@ -93,15 +104,6 @@ class StudentDataFragment : Fragment() {
         }
     }
 
-    private fun errorInputText(){
-        // Set error text
-        val txtName : EditText? = view?.findViewById(R.id.etName)
-        txtName?.error = getString(R.string.helperError)
-
-        // Clear error text
-        txtName?.error = null
-    }
-
     //Inflate Drop Menu
     private fun dropMenu(){
         val autoCompleteTextView: AutoCompleteTextView? = view?.findViewById(R.id.acYear)
@@ -111,5 +113,55 @@ class StudentDataFragment : Fragment() {
         val adapter = ArrayAdapter(requireContext(), R.layout.list_item, items)
 
         (autoCompleteTextView)?.setAdapter(adapter)
+    }
+
+
+    private fun observeInsert() {
+
+        val dni = binding.etDni.text.toString()
+        val name = binding.etName.text.toString()
+        val surname = binding.etSurname.text.toString()
+        val year = _year
+
+        if (dni.isEmpty() || dni.length < 8) {
+            binding.etDni.error = getString(R.string.helperError)
+        } else if (name.isEmpty() || surname.length < 3) {
+            binding.etName.error = getString(R.string.helperError)
+        } else if (surname.isEmpty() || surname.length < 4) {
+            binding.etSurname.error = getString(R.string.helperError)
+        } else if (year.isEmpty()) {
+            binding.acYear.error = getString(R.string.helperError)
+        } else {
+
+
+
+            viewModelStudent.insertNewStudent(dni.toInt(), name, surname, year).observe(viewLifecycleOwner) { result ->
+                when (result) {
+                    is Resource.Loading -> {
+                        showProgress()
+                    }
+
+                    is Resource.Success -> {
+                        Toast.makeText(activity as MainActivity, "Alumno ingresado exitosamente", Toast.LENGTH_SHORT).show()
+                        hideProgress()
+                    }
+
+                    is Resource.Failure -> {
+                        Toast.makeText(
+                            activity as MainActivity,
+                            "Error al ingresar ${result.exception}", Toast.LENGTH_SHORT).show()
+                    }
+                }
+            }
+        }
+    }
+
+
+    private fun showProgress(){
+        binding.piInsert.visibility = View.VISIBLE
+    }
+
+    private fun hideProgress(){
+        binding.piInsert.visibility = View.GONE
     }
 }
