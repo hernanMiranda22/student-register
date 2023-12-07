@@ -5,7 +5,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.liveData
 import androidx.lifecycle.viewModelScope
-import com.example.sistemaalumnosv2.data.Student
 import com.example.sistemaalumnosv2.domain.InsertUseCase
 import com.example.sistemaalumnosv2.model.CreateStudent
 import com.example.sistemaalumnosv2.model.CreateStudentRepository
@@ -16,15 +15,14 @@ import kotlinx.coroutines.launch
 
 class ViewModelStudent(private val insertUseCase: InsertUseCase):ViewModel() {
 
-    val student = Student()
 
     fun insertNewStudent(dni:Int, name:String, surname:String, year:String) = liveData(Dispatchers.IO) {
         emit(Resource.Loading()) // Emit es lo mismo que usar .postValue(), este primer emit obtiene el primer valor para devolverlo con el LiveData
 
         try {
 
-            val version = insertUseCase.insertStudent(dni, name, surname, year)
-            emit(version)
+            val dataInsert = insertUseCase.insertStudent(dni, name, surname, year)
+            emit(dataInsert)
 
         }catch (e : Exception){
             emit(Resource.Failure(e))

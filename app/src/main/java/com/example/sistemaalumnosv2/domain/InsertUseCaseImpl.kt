@@ -1,6 +1,5 @@
 package com.example.sistemaalumnosv2.domain
 
-import com.example.sistemaalumnosv2.data.Student
 import com.example.sistemaalumnosv2.data.network.InsertStudentRepo
 import com.example.sistemaalumnosv2.vo.Resource
 

@@ -1,6 +1,5 @@
 package com.example.sistemaalumnosv2.data.network
 
-import com.example.sistemaalumnosv2.data.Student
 import com.example.sistemaalumnosv2.vo.Resource
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.tasks.await
@@ -16,12 +15,13 @@ class InsertStudentRepoImpl:InsertStudentRepo {
             "Nota" to 0
         )
 
+        //Logica de firebase
         val dataStudent = FirebaseFirestore.getInstance().collection("Student")
             .document(dni.toString())
             .set(studentMap).await()
 
         return Resource.Success(1)
 
-        //Logica de firebase
+
     }
 }

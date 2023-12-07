@@ -2,6 +2,7 @@ package com.example.sistemaalumnosv2.presentation.view.fragment
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -9,20 +10,29 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.sistemaalumnosv2.R
+import com.example.sistemaalumnosv2.data.DataStudent
+import com.example.sistemaalumnosv2.data.network.GradeStudentRepoImpl
+import com.example.sistemaalumnosv2.data.network.SearchStudentRepoImpl
 import com.example.sistemaalumnosv2.databinding.FragmentOperationBinding
+import com.example.sistemaalumnosv2.domain.GradeStudentUseCaseImpl
+import com.example.sistemaalumnosv2.domain.SearchStudentUseCaseImpl
 import com.example.sistemaalumnosv2.presentation.view.activity.MainActivity
 import com.example.sistemaalumnosv2.presentation.view.adapter.CallBackText
 import com.example.sistemaalumnosv2.presentation.view.adapter.OperationAdapter
 import com.example.sistemaalumnosv2.presentation.viewmodel.ViewModelOperation
+import com.example.sistemaalumnosv2.presentation.viewmodel.ViewModelOperationFactory
+import com.example.sistemaalumnosv2.vo.Resource
 
 class OperationFragment : Fragment() {
 
     private var _binding : FragmentOperationBinding? = null
     private val binding get() = _binding!!
 
-    private val viewModelOperation : ViewModelOperation by viewModels()
+    private val viewModelOperation by lazy { ViewModelProvider(this,ViewModelOperationFactory(SearchStudentUseCaseImpl(SearchStudentRepoImpl()),
+        GradeStudentUseCaseImpl(GradeStudentRepoImpl())))[ViewModelOperation::class.java] }
 
     private lateinit var adapter : OperationAdapter
 
@@ -62,15 +72,22 @@ class OperationFragment : Fragment() {
         if (dni.isEmpty() || dni.length < 8){
             binding.etDni.error = getString(R.string.helperError)
         }else{
-            viewModelOperation.searchStudent(dni.toInt()).observe(viewLifecycleOwner, Observer {lista ->
-                if (lista != null){
-                    Toast.makeText(activity as MainActivity, "Alumno Encontrado", Toast.LENGTH_SHORT).show()
-                            adapter.setListData(lista)
-                            adapter.notifyDataSetChanged()
-                }else{
-                    Toast.makeText(activity as MainActivity, "Error", Toast.LENGTH_SHORT).show()
+            viewModelOperation.searchDataStudent(dni.toInt()).observe(viewLifecycleOwner) {lista ->
+                when(lista){
+                    is Resource.Loading -> {
+                        binding.shimmerLayout.startShimmer()
+                    }
+                    is Resource.Success -> {
+                        binding.shimmerLayout.stopShimmer()
+                        binding.shimmerLayout.hideShimmer()
+                        adapter.setListData(lista.data)
+                        adapter.notifyDataSetChanged()
+                    }
+                    is Resource.Failure -> {
+                        Log.e("ERROR", "${lista.exception}")
+                    }
                 }
-            })
+            }
         }
     }
 
@@ -85,9 +102,11 @@ class OperationFragment : Fragment() {
                     override fun onClick(position: Int, gradeStudent: Int) {
                         val dni = binding.etDni.text.toString()
 
-                        viewModelOperation.insertGrade(itemAdapter, dni.toInt())
-                            .observe(viewLifecycleOwner, Observer {
-                                if (it != null) {
+                        viewModelOperation.insertGrade(dni.toInt(),itemAdapter)
+                            .observe(viewLifecycleOwner, Observer {result ->
+                                if(result == null){
+                                    Toast.makeText(activity as MainActivity, "Error al ingresar la nota", Toast.LENGTH_SHORT).show()
+                                }else{
                                     Toast.makeText(activity as MainActivity, "Nota ingresada", Toast.LENGTH_SHORT).show()
                                 }
                             })

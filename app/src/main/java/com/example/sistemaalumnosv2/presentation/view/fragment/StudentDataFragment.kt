@@ -7,15 +7,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
-import android.widget.EditText
-import android.widget.SearchView
 import android.widget.Toast
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.sistemaalumnosv2.R
-import com.example.sistemaalumnosv2.data.Student
 import com.example.sistemaalumnosv2.data.network.InsertStudentRepoImpl
 import com.example.sistemaalumnosv2.databinding.FragmentStudenDataBinding
 import com.example.sistemaalumnosv2.domain.InsertUseCaseImpl
@@ -23,7 +18,7 @@ import com.example.sistemaalumnosv2.presentation.view.activity.MainActivity
 import com.example.sistemaalumnosv2.presentation.viewmodel.ViewModelStudent
 import com.example.sistemaalumnosv2.presentation.viewmodel.ViewModelStudentFactory
 import com.example.sistemaalumnosv2.vo.Resource
-import com.google.android.material.textfield.MaterialAutoCompleteTextView
+
 
 class StudentDataFragment : Fragment() {
 
@@ -147,9 +142,7 @@ class StudentDataFragment : Fragment() {
                     }
 
                     is Resource.Failure -> {
-                        Toast.makeText(
-                            activity as MainActivity,
-                            "Error al ingresar ${result.exception}", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(activity as MainActivity, "Error al ingresar ${result.exception}", Toast.LENGTH_SHORT).show()
                     }
                 }
             }
