@@ -5,6 +5,8 @@ import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.tasks.await
 
 class InsertStudentRepoImpl:InsertStudentRepo {
+
+    //Logica para ingresar los datos del alumno
     override suspend fun insertStudent(dni:Int, name:String, surname:String, year:String): Resource<Int> {
 
         val studentMap = hashMapOf(
@@ -16,12 +18,11 @@ class InsertStudentRepoImpl:InsertStudentRepo {
         )
 
         //Logica de firebase
-        val dataStudent = FirebaseFirestore.getInstance().collection("Student")
+        FirebaseFirestore.getInstance().collection("Student")
             .document(dni.toString())
             .set(studentMap).await()
 
         return Resource.Success(1)
-
 
     }
 }

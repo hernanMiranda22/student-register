@@ -7,7 +7,7 @@
     tools:context=".presentation.view.activity.MainActivity"
     android:background="#FFF">
 
-    <!-- TODO: Update blank fragment layout -->
+
     <ImageView
         android:id="@+id/ivIconAdd"
         android:layout_width="65dp"
@@ -101,12 +101,12 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:hint="@string/inputTextYear"
+        app:errorEnabled="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tiApellido"
-        app:layout_constraintVertical_bias="0.02"
-        app:errorEnabled="true">
+        app:layout_constraintVertical_bias="0.02">
 
         <AutoCompleteTextView
             android:id="@+id/acYear"
@@ -141,6 +141,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/btnSaveData"
-        app:layout_constraintVertical_bias="0.05"/>
+        app:layout_constraintVertical_bias="0.05" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

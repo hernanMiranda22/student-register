@@ -73,6 +73,9 @@ class OperationAdapter(private  val item : Int ,private val context:Context, val
             }
 
             override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
+                if (s.toString() == ""){
+                    return
+                }
                 callBackText.textChangeExercise(position,s.toString())
             }
         })

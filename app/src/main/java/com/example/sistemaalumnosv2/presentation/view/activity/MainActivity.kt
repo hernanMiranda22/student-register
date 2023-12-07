@@ -27,9 +27,11 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    //Lógica del BottomNavigation
     private fun loadNavigationBar(){
         binding.btmNavigation.setOnItemSelectedListener {
             when(it.itemId){
+                //Navegacion hacia 'StudentDataFragment'(Vista principal)
                 R.id.btnInfoStudent ->{
                     supportFragmentManager.commit{
                         setReorderingAllowed(true)
@@ -37,15 +39,12 @@ class MainActivity : AppCompatActivity() {
                     }
                     true
                 }
+                //Navegacion hacia 'OperationFragment'(Vista secundaria)
                 R.id.btnSearchStudent ->{
                     supportFragmentManager.commit{
                         setReorderingAllowed(true)
                         replace<OperationFragment>(R.id.fcvMain)
                     }
-                    true
-                }
-                R.id.btnGradeStudent ->{
-
                     true
                 }
                 else -> false

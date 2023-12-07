@@ -13,10 +13,4 @@
         android:icon="@drawable/ic_search"
         android:title="@string/bottom_search"
         app:showAsAction="ifRoom" />
-    <item
-        android:id="@+id/btnGradeStudent"
-        android:enabled="true"
-        android:icon="@drawable/ic_grade_add"
-        android:title="@string/bottom_grade"
-        app:showAsAction="ifRoom" />
 </menu>

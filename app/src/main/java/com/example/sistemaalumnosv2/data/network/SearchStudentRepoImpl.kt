@@ -6,6 +6,8 @@ import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.tasks.await
 
 class SearchStudentRepoImpl:SearchStudentRepo {
+
+    //Logica para obtener los datos especificados del alumno
     override suspend fun searchStudent(dni:Int): Resource<MutableList<DataStudent>> {
 
         val listStudent = mutableListOf<DataStudent>()

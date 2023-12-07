@@ -1,6 +1,7 @@
 package com.example.sistemaalumnosv2.presentation.view.fragment
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -22,13 +23,13 @@ import com.example.sistemaalumnosv2.vo.Resource
 
 class StudentDataFragment : Fragment() {
 
-
+    //Declaracion del ViewBingin
     private var _binding : FragmentStudenDataBinding? = null
     private val binding get() = _binding!!
 
-    //private val viewModelStudent : ViewModelStudent by viewModels()
-
-    private val viewModelStudent by lazy { ViewModelProvider(this, ViewModelStudentFactory(InsertUseCaseImpl(InsertStudentRepoImpl())))[ViewModelStudent::class.java] }
+    //Declaracion del ViewModel
+    private val viewModelStudent by lazy { ViewModelProvider(this,
+        ViewModelStudentFactory(InsertUseCaseImpl(InsertStudentRepoImpl())))[ViewModelStudent::class.java] }
 
     private var _year = ""
 
@@ -49,9 +50,6 @@ class StudentDataFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-
-
-
         dropMenu()
 
         getYear()
@@ -66,32 +64,7 @@ class StudentDataFragment : Fragment() {
 
     }
 
-    private fun createStudent(){
-
-        val dni = binding.etDni.text.toString()
-        val name = binding.etName.text.toString()
-        val surname = binding.etSurname.text.toString()
-        val year = _year
-
-        if (dni.isEmpty() || dni.length < 8){
-            binding.etDni.error = getString(R.string.helperError)
-        }else if (name.isEmpty() || surname.length < 3){
-            binding.etName.error = getString(R.string.helperError)
-        }else if (surname.isEmpty() || surname.length < 4){
-            binding.etSurname.error = getString(R.string.helperError)
-        }else if (year.isEmpty()){
-            binding.acYear.error = getString(R.string.helperError)
-        }else{
-            viewModelStudent.createStudent(dni.toInt(),name,surname, year).observe(viewLifecycleOwner, Observer {
-                if (it != null){
-                    Toast.makeText(activity as MainActivity, "Alumno ingresado!", Toast.LENGTH_SHORT).show()
-                }else{
-                    Toast.makeText(activity as MainActivity, "Error al ingresar el alumno", Toast.LENGTH_SHORT).show()
-                }
-            })
-        }
-    }
-
+    //Obtiene el valor del DropMenu y lo guarda en la variable '_year'
     private fun getYear(){
         binding.acYear.setOnItemClickListener { parent, view, position, id ->
             val studentSelected = parent.getItemAtPosition(position) as String
@@ -111,6 +84,7 @@ class StudentDataFragment : Fragment() {
     }
 
 
+    //Logica para ingresar los datos del alumno con un Oberver
     private fun observeInsert() {
 
         val dni = binding.etDni.text.toString()
@@ -119,16 +93,14 @@ class StudentDataFragment : Fragment() {
         val year = _year
 
         if (dni.isEmpty() || dni.length < 8) {
-            binding.etDni.error = getString(R.string.helperError)
+            binding.etDni.error = getString(R.string.helperErrorDni)
         } else if (name.isEmpty() || surname.length < 3) {
-            binding.etName.error = getString(R.string.helperError)
+            binding.etName.error = getString(R.string.helperErrorName)
         } else if (surname.isEmpty() || surname.length < 4) {
-            binding.etSurname.error = getString(R.string.helperError)
+            binding.etSurname.error = getString(R.string.helperErrorSurname)
         } else if (year.isEmpty()) {
-            binding.acYear.error = getString(R.string.helperError)
+            binding.acYear.error = getString(R.string.helperErrorYear)
         } else {
-
-
 
             viewModelStudent.insertNewStudent(dni.toInt(), name, surname, year).observe(viewLifecycleOwner) { result ->
                 when (result) {
@@ -142,7 +114,7 @@ class StudentDataFragment : Fragment() {
                     }
 
                     is Resource.Failure -> {
-                        Toast.makeText(activity as MainActivity, "Error al ingresar ${result.exception}", Toast.LENGTH_SHORT).show()
+                       Log.e("Erorr","${result.exception}")
                     }
                 }
             }

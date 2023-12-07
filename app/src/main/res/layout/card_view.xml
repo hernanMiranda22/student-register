@@ -15,7 +15,6 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <!-- Media -->
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -23,14 +22,14 @@
                 android:orientation="vertical"
                 android:padding="16dp">
 
-                <!-- Title, secondary and supporting text -->
+
                 <TextView
                     android:id="@+id/tvSurname"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/inputTextSurname"
-                    android:textAppearance="?attr/textAppearanceTitleMedium"
-                    />
+                    android:textAppearance="?attr/textAppearanceTitleMedium" />
+
                 <TextView
                     android:id="@+id/tvYear"
                     android:layout_width="wrap_content"
@@ -38,8 +37,8 @@
                     android:layout_marginTop="8dp"
                     android:text="@string/inputTextYear"
                     android:textAppearance="?attr/textAppearanceBodyMedium"
-                    android:textColor="?android:attr/textColorSecondary"
-                    />
+                    android:textColor="?android:attr/textColorSecondary" />
+
                 <TextView
                     android:id="@+id/tvGrade"
                     android:layout_width="wrap_content"
@@ -47,22 +46,22 @@
                     android:layout_marginTop="16dp"
                     android:text="@string/inputTextGrade"
                     android:textAppearance="?attr/textAppearanceBodyMedium"
-                    android:textColor="?android:attr/textColorSecondary"
-                    />
+                    android:textColor="?android:attr/textColorSecondary" />
 
             </LinearLayout>
 
-            <!-- Buttons -->
+
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="8dp"
                 android:orientation="horizontal">
+
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="200dp"
                     android:layout_height="wrap_content"
-                    app:endIconMode="clear_text"
                     android:hint="@string/inputTextGrade"
+                    app:endIconMode="clear_text"
                     app:startIconDrawable="@drawable/ic_grade_add">
 
                     <com.google.android.material.textfield.TextInputEditText
@@ -70,17 +69,16 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:inputType="number"
-                        android:maxLength="4"/>
+                        android:maxLength="4" />
 
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btnGradeAdd"
+                    style="?attr/borderlessButtonStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="55dp"
-                    android:text="@string/buttonSaveData"
-                    style="?attr/borderlessButtonStyle"
-                    />
+                    android:text="@string/buttonSaveData" />
             </LinearLayout>
 
         </LinearLayout>
