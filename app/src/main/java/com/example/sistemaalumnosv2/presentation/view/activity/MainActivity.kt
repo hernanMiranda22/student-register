@@ -7,6 +7,7 @@ import androidx.fragment.app.commit
 import androidx.fragment.app.replace
 import com.example.sistemaalumnosv2.R
 import com.example.sistemaalumnosv2.databinding.ActivityMainBinding
+import com.example.sistemaalumnosv2.presentation.view.fragment.GradeFragment
 import com.example.sistemaalumnosv2.presentation.view.fragment.OperationFragment
 import com.example.sistemaalumnosv2.presentation.view.fragment.StudentDataFragment
 
@@ -39,7 +40,15 @@ class MainActivity : AppCompatActivity() {
                     }
                     true
                 }
-                //Navegacion hacia 'OperationFragment'(Vista secundaria)
+                //Navegacion hacia 'OperationFragment(Vista secundaria)'
+                R.id.btnTermStudent ->{
+                    supportFragmentManager.commit{
+                        setReorderingAllowed(true)
+                        replace<GradeFragment>(R.id.fcvMain)
+                    }
+                    true
+                }
+                //Navegacion hacia 'OperationFragment'(Vista tercearia)
                 R.id.btnSearchStudent ->{
                     supportFragmentManager.commit{
                         setReorderingAllowed(true)

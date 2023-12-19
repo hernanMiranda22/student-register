@@ -7,11 +7,18 @@ import kotlinx.coroutines.tasks.await
 class GradeStudentRepoImpl:GradeStudentRepo {
 
     //Logica de firebase que actualiza el campo "Nota" para calificar al alumno
-    override suspend fun insertGrade(dni:Int, grade:Int): Resource<Int> {
+    override suspend fun insertGrade(dni:Int, firstTerm:Int,secondTerm:Int,thirdTerm:Int): Resource<Int> {
+
+        val termMap = hashMapOf<String, Any>(
+            "Trimestre 1" to firstTerm,
+            "Trimestre 2" to secondTerm,
+            "Trimestre 3" to thirdTerm
+        )
+
 
         FirebaseFirestore.getInstance().collection("Student").document(dni.toString())
-            .update(mapOf("Nota" to grade)).await()
+            .update(termMap).await()
 
-        return Resource.Success(grade)
+        return Resource.Success(1)
     }
 }

@@ -9,18 +9,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
-import android.widget.EditText
-import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.sistemaalumnosv2.R
-import com.example.sistemaalumnosv2.data.network.GradeStudentRepoImpl
 import com.example.sistemaalumnosv2.data.network.SearchStudentRepoImpl
 import com.example.sistemaalumnosv2.databinding.FragmentOperationBinding
-import com.example.sistemaalumnosv2.domain.GradeStudentUseCaseImpl
 import com.example.sistemaalumnosv2.domain.SearchStudentUseCaseImpl
 import com.example.sistemaalumnosv2.presentation.view.activity.MainActivity
-import com.example.sistemaalumnosv2.presentation.view.adapter.CallBackText
 import com.example.sistemaalumnosv2.presentation.view.adapter.OperationAdapter
 import com.example.sistemaalumnosv2.presentation.viewmodel.ViewModelOperation
 import com.example.sistemaalumnosv2.presentation.viewmodel.ViewModelOperationFactory
@@ -32,8 +27,7 @@ class OperationFragment : Fragment() {
     private val binding get() = _binding!!
 
     private val viewModelOperation by lazy { ViewModelProvider(this,
-        ViewModelOperationFactory(SearchStudentUseCaseImpl(SearchStudentRepoImpl()),
-        GradeStudentUseCaseImpl(GradeStudentRepoImpl())))[ViewModelOperation::class.java] }
+        ViewModelOperationFactory(SearchStudentUseCaseImpl(SearchStudentRepoImpl())))[ViewModelOperation::class.java] }
 
     private lateinit var adapter : OperationAdapter
 
@@ -97,41 +91,16 @@ class OperationFragment : Fragment() {
 
     //Inicialización del RecyclerView
     private fun initRecyclerView() {
-        adapter = OperationAdapter(itemAdapter, activity as MainActivity, recyclerGetText())
+        adapter = OperationAdapter(itemAdapter, activity as MainActivity,)
         binding.rvCardStudent.layoutManager = LinearLayoutManager(activity as MainActivity)
         binding.rvCardStudent.adapter = adapter
-    }
 
-    //Logica para obtener el texto del EditText del Recycler e ingresarlo la nota del alumno
-    private fun recyclerGetText() = object : CallBackText {
+        adapter.setOnClickListener(object : OperationAdapter.OnClickListener {
 
-        val txtGrade: EditText? = view?.findViewById(R.id.etGradeAdd)
+            override fun onClick(position: Int, gradeStudent: Int) {
 
-        //Obtiene el contenido del EditText del RecyclerView después de que cambie su valor.
-        override fun textChangeExercise(position: Int, grade: String) {
-            itemAdapter = grade.toInt()
-
-            //Después de obtener el valor del EditText, se llama al onClick del boton "Ingresar nota" y se actualiza el campo "Nota" en FireStore
-            adapter.setOnClickListener(object : OperationAdapter.OnClickListener {
-
-                override fun onClick(position: Int, gradeStudent: Int) {
-                    val dni = binding.etDni.text.toString()
-
-                    if (itemAdapter <= 0){
-                        txtGrade?.error = getString(R.string.helperErrorGrade)
-                    }else{
-                        viewModelOperation.insertGrade(dni.toInt(),itemAdapter)
-                            .observe(viewLifecycleOwner) {result ->
-                                if(result == null){
-                                    Toast.makeText(activity as MainActivity, "Error al ingresar la nota", Toast.LENGTH_SHORT).show()
-                                }else{
-                                    Toast.makeText(activity as MainActivity, "Nota ingresada", Toast.LENGTH_SHORT).show()
-                                }
-                            }
-                    }
-                }
-            })
-        }
+            }
+        })
     }
 
     private fun hideKeyboard() {

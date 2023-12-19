@@ -3,7 +3,7 @@
 
     <string name="bottom_search">Buscar Alumno</string>
     <string name="bottom_student">Ingresar Alumno</string>
-    <string name="bottom_grade">Ingresar Nota</string>
+    <string name="bottom_grade">Ingresar Trimestre</string>
 
     <string name="description_icon_add">PersonAddIcon</string>
 
@@ -12,6 +12,10 @@
     <string name="inputTextSurname">Apellido</string>
     <string name="inputTextYear">Grado</string>
     <string name="inputTextGrade">Nota</string>
+    <string name="inputTextFirstTerm">Primer trimestre</string>
+    <string name="inputTextSecondTerm">Segundo trimestre</string>
+    <string name="inputTextThirdTerm">Tercer Trimestre</string>
+
     <string name="helperInputDni">Sin puntos</string>
     <string name="helperErrorDni">Coloque un DNI</string>
     <string name="helperErrorName">Coloque un Nombre</string>
@@ -19,8 +23,16 @@
     <string name="helperErrorYear">Seleccione el año</string>
     <string name="helperErrorGrade">Coloque una calificación</string>
 
+    <string name="helperInputTerm">Si hay un 0, el alumno no esta calificado</string>
+
+    <string name="inputTextFirstTermCard">1° Trimestre</string>
+    <string name="inputTextSecondTermCard">2° Trimestre</string>
+    <string name="inputTextThirdTermCard">3°Trimestre</string>
+    <string name="inputTextAverageGradeCard">Promedio Final</string>
+
 
     <string name="buttonSaveData">Ingresar Alumno</string>
+    <string name="buttonSaveTerm">Ingresar Trimestres</string>
 
     <string name="hintSearchBar">DNI del alumno</string>
 

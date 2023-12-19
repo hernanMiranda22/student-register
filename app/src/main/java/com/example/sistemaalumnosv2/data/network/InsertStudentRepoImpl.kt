@@ -14,7 +14,10 @@ class InsertStudentRepoImpl:InsertStudentRepo {
             "Nombre" to name,
             "Apellido" to surname,
             "Curso" to year,
-            "Nota" to 0
+            "Trimestre 1" to 0,
+            "Trimestre 2" to 0,
+            "Trimestre 3" to 0
+
         )
 
         //Logica de firebase

@@ -52,7 +52,6 @@
 
     </com.facebook.shimmer.ShimmerFrameLayout>
 
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvCardStudent"
         android:layout_width="0dp"

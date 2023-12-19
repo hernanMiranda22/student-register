@@ -8,6 +8,12 @@
         android:title="@string/bottom_student"
         app:showAsAction="ifRoom" />
     <item
+        android:id="@+id/btnTermStudent"
+        android:enabled="true"
+        android:icon="@drawable/ic_grade_add"
+        android:title="@string/bottom_grade"
+        app:showAsAction="ifRoom" />
+    <item
         android:id="@+id/btnSearchStudent"
         android:enabled="true"
         android:icon="@drawable/ic_search"
