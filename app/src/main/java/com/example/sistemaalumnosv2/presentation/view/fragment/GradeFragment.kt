@@ -7,6 +7,9 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.EditorInfo
+import android.widget.EditText
+import android.widget.TextView
 import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintSet
 import androidx.lifecycle.ViewModelProvider
@@ -47,7 +50,7 @@ class GradeFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // Inflate the layout for this fragment
 
         _binding = FragmentGradeBinding.inflate(layoutInflater,container, false)
@@ -57,6 +60,9 @@ class GradeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+
+        doneKeyboard(binding.etDniGrade)
 
         initRecyclerView()
 
@@ -169,4 +175,25 @@ class GradeFragment : Fragment() {
         constrainSet.setVerticalBias(R.id.tiContainerFirstTerm, bias)
         constrainSet.applyTo(constrainGrade)
     }
+
+    private fun doneKeyboard(search: EditText){
+        search.setOnEditorActionListener(TextView.OnEditorActionListener{ _, actionId, _ ->
+
+            if (actionId == EditorInfo.IME_ACTION_DONE) {
+
+                // Do something of your interest.
+                // We in this examples created the following Toasts
+                if(search.text.toString() == ""){
+                    binding.etDniGrade.error = getString(R.string.helperErrorDni)
+                } else {
+                    getStudentData()
+                }
+
+                return@OnEditorActionListener true
+            }
+            false
+        })
+    }
+
+
 }

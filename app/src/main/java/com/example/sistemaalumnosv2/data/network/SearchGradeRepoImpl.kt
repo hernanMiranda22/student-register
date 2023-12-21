@@ -6,6 +6,8 @@ import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.tasks.await
 
 class SearchGradeRepoImpl:SearchGradeRepo {
+
+    //Logica para obtener los datos e ingresar los trimestres (GradeStudent)
     override suspend fun getGradeStudent(dni: Int): Resource<MutableList<GradeStudent>> {
         val gradeList = mutableListOf<GradeStudent>()
 

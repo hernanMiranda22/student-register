@@ -25,13 +25,18 @@
 
     <string name="helperInputTerm">Si hay un 0, el alumno no esta calificado</string>
 
-    <string name="inputTextFirstTermCard">1° Trimestre</string>
-    <string name="inputTextSecondTermCard">2° Trimestre</string>
-    <string name="inputTextThirdTermCard">3°Trimestre</string>
-    <string name="inputTextAverageGradeCard">Promedio Final</string>
-
+    <string name="inputTextFirstTermCard">1° Trim:</string>
+    <string name="inputTextSecondTermCard">2° Trim:</string>
+    <string name="inputTextThirdTermCard">3°Trim:</string>
+    <string name="inputTextAverageGradeCard">Prom. Final:</string>
+    <string name="inputTextDniGradeCard">DNI:</string>
+    <string name="inputTextNameGradeCard">Nombre:</string>
+    <string name="inputTextSurnameGradeCard">Apellido:</string>
+    <string name="inputTextYearGradeCard">Grado:</string>
+    <string name="inputTextDniList">Filtrar por DNI</string>
 
     <string name="buttonSaveData">Ingresar Alumno</string>
+    <string name="buttonCreatePDF">Crear PDF</string>
     <string name="buttonSaveTerm">Ingresar Trimestres</string>
 
     <string name="hintSearchBar">DNI del alumno</string>

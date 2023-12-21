@@ -6,7 +6,7 @@ import kotlinx.coroutines.tasks.await
 
 class GradeStudentRepoImpl:GradeStudentRepo {
 
-    //Logica de firebase que actualiza el campo "Nota" para calificar al alumno
+    //Logica para ingresar los trimestres del alumno (GradeFragment)
     override suspend fun insertGrade(dni:Int, firstTerm:Int,secondTerm:Int,thirdTerm:Int): Resource<Int> {
 
         val termMap = hashMapOf<String, Any>(

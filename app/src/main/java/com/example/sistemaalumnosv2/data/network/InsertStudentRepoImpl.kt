@@ -6,7 +6,7 @@ import kotlinx.coroutines.tasks.await
 
 class InsertStudentRepoImpl:InsertStudentRepo {
 
-    //Logica para ingresar los datos del alumno
+    //Logica para ingresar los datos del alumno(StudentDataFragment)
     override suspend fun insertStudent(dni:Int, name:String, surname:String, year:String): Resource<Int> {
 
         val studentMap = hashMapOf(

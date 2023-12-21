@@ -6,6 +6,6 @@ import com.example.sistemaalumnosv2.data.network.SearchStudentRepo
 import com.example.sistemaalumnosv2.vo.Resource
 
 class SearchStudentUseCaseImpl(private val searchStudentRepo: SearchStudentRepo):SearchStudentUseCase {
-    override suspend fun searchStudent(dni: Int): Resource<MutableList<GradeStudent>> =
-        searchStudentRepo.searchStudent(dni)
+    override suspend fun searchStudent(): Resource<MutableList<DataStudent>> =
+        searchStudentRepo.searchStudent()
 }

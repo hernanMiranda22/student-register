@@ -2,29 +2,27 @@ package com.example.sistemaalumnosv2.presentation.view.adapter
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.text.Editable
-import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.EditText
 import androidx.recyclerview.widget.RecyclerView
 import com.example.sistemaalumnosv2.R
 import com.example.sistemaalumnosv2.data.model.DataStudent
+
 import com.example.sistemaalumnosv2.data.model.GradeStudent
 import com.example.sistemaalumnosv2.databinding.CardViewStudentBinding
 
-class OperationAdapter(private  val item : Int ,private val context:Context): RecyclerView.Adapter<OperationAdapter.ViewHolder>() {
+class OperationAdapter(private var student : MutableList<DataStudent>, context:Context): RecyclerView.Adapter<OperationAdapter.ViewHolder>() {
 
     private var onClickListener: OnClickListener? = null
 
 
-    private var dataList = mutableListOf<GradeStudent>() //Los datos que se le pasan al onBindViewHolder para que setee los datos
+    //private var dataList = mutableListOf<DataStudent>() //Los datos que se le pasan al onBindViewHolder para que setee los datos
 
     //Funcion que setea los datos en el dataList
-    fun setListData(data:MutableList<GradeStudent>){
-        dataList = data
-    }
+//    fun setListData(data:MutableList<DataStudent>){
+//        dataList = data
+//    }
 
     fun setOnClickListener(onClickListener: OnClickListener){
         this.onClickListener = onClickListener
@@ -37,16 +35,17 @@ class OperationAdapter(private  val item : Int ,private val context:Context): Re
     inner class ViewHolder(view : View): RecyclerView.ViewHolder(view){
         private val binding = CardViewStudentBinding.bind(view)
 
-        val btnAddGrade = binding.btnGradeAdd
-        fun bind(student : GradeStudent){
+        @SuppressLint("SetTextI18n")
+        fun bind(student : DataStudent){
             val averageGrade : Float = ((student.firstTerm + student.secondTerm + student.thirdTerm) / 3).toFloat()
-            binding.tvSurname.text = student.surname
-            binding.tvName.text = student.name
-            binding.tvYear.text = student.year
-            binding.tvFirstTermStudent.text = student.firstTerm.toString()
-            binding.tvSecondTermStudent.text = student.secondTerm.toString()
-            binding.tvThirdTermStudent.text = student.thirdTerm.toString()
-            binding.tvAverageGrade.text = averageGrade.toString()
+            binding.tvDni.text = "DNI: "+student.dni.toString()
+            binding.tvSurname.text = "Apellido:" +student.surname
+            binding.tvName.text = " Nombre: "+student.name
+            binding.tvYear.text = " Grado: "+student.year
+            binding.tvFirstTermStudent.text = "1° Trim: "+student.firstTerm.toString()
+            binding.tvSecondTermStudent.text = " 2° Trim: "+student.secondTerm.toString()
+            binding.tvThirdTermStudent.text = " 3° Trim: "+student.thirdTerm.toString()
+            binding.tvAverageGrade.text = "Prom. Final: $averageGrade"
         }
     }
 
@@ -57,22 +56,21 @@ class OperationAdapter(private  val item : Int ,private val context:Context): Re
     }
 
     override fun onBindViewHolder(holder: ViewHolder, @SuppressLint("RecyclerView") position: Int) {
-        val student = dataList[position]
+        val student = student[position]
 
         holder.bind(student)
-
-        holder.btnAddGrade.setOnClickListener {
-            if (onClickListener != null) {
-                onClickListener!!.onClick(position, item)
-            }
-        }
     }
 
     override fun getItemCount(): Int {
-        return if (dataList.size >0){
-            dataList.size
+        return if (student.size >0){
+            student.size
         }else{
             return 0
         }
+    }
+
+    fun filterStudent(student : MutableList<DataStudent>){
+        this.student = student
+        notifyDataSetChanged()
     }
 }

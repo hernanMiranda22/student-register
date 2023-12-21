@@ -7,13 +7,15 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".presentation.view.fragment.OperationFragment">
 
+
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/tiContainerDni"
-        style="?attr/textInputFilledStyle"
+        android:id="@+id/tiDniList"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:endIconDrawable="@drawable/ic_search"
-        app:endIconMode="custom"
+        android:hint="@string/inputTextDniList"
+        app:counterEnabled="true"
+        app:counterMaxLength="8"
+        app:endIconMode="clear_text"
         app:errorEnabled="true"
         app:helperText="@string/helperInputDni"
         app:helperTextEnabled="true"
@@ -21,36 +23,31 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0">
+        app:layout_constraintVertical_bias="0"
+        app:startIconContentDescription="@string/inputTextDni">
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/etDni"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:maxLength="8" />
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/etDniList"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="number"
+        android:maxLength="8"
+        android:imeOptions="actionDone"/>
 
     </com.google.android.material.textfield.TextInputLayout>
 
-    <com.facebook.shimmer.ShimmerFrameLayout
-        android:id="@+id/shimmer_layout"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
+
+    <com.google.android.material.progressindicator.CircularProgressIndicator
+        android:id="@+id/piListStudent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:indeterminate="true"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tiContainerDni">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <include layout="@layout/card_view_loading" />
-
-        </LinearLayout>
-
-    </com.facebook.shimmer.ShimmerFrameLayout>
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tiDniList"
+        app:layout_constraintVertical_bias="0" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvCardStudent"
@@ -59,7 +56,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tiContainerDni" />
-
+        app:layout_constraintTop_toBottomOf="@+id/tiDniList" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

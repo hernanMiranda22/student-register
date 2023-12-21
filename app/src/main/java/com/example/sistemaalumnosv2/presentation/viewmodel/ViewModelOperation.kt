@@ -10,12 +10,12 @@ import kotlinx.coroutines.Dispatchers
 class ViewModelOperation(private val searchStudentUseCase: SearchStudentUseCase):ViewModel() {
 
 
-    fun searchDataStudent(dni:Int) = liveData(Dispatchers.IO) {
+    fun searchDataStudent() = liveData(Dispatchers.IO) {
         emit(Resource.Loading())
 
         try {
 
-            val dataStudent = searchStudentUseCase.searchStudent(dni)
+            val dataStudent = searchStudentUseCase.searchStudent()
             emit(dataStudent)
 
         }catch (e:Exception){

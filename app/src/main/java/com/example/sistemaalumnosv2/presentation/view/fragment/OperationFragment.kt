@@ -9,9 +9,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
+import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.sistemaalumnosv2.R
+import com.example.sistemaalumnosv2.data.model.DataStudent
 import com.example.sistemaalumnosv2.data.network.SearchStudentRepoImpl
 import com.example.sistemaalumnosv2.databinding.FragmentOperationBinding
 import com.example.sistemaalumnosv2.domain.SearchStudentUseCaseImpl
@@ -31,7 +33,7 @@ class OperationFragment : Fragment() {
 
     private lateinit var adapter : OperationAdapter
 
-    private var itemAdapter = 0
+    private var itemAdapter = mutableListOf<DataStudent>()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -55,37 +57,36 @@ class OperationFragment : Fragment() {
 
         initRecyclerView()
 
-        binding.tiContainerDni.setEndIconOnClickListener {
-            searchStudent()
-        }
+        loadStudent()
+
+        filterList()
 
     }
 
-
     @SuppressLint("NotifyDataSetChanged")
-    private fun searchStudent(){
-        val dni = binding.etDni.text.toString()
-
-        if (dni.isEmpty() || dni.length < 8){
-            binding.etDni.error = getString(R.string.helperErrorDni)
-        }else{
-            viewModelOperation.searchDataStudent(dni.toInt()).observe(viewLifecycleOwner) {list ->
-                when(list){
-                    is Resource.Loading -> {
-                        binding.shimmerLayout.visibility = View.VISIBLE
-                    }
-                    is Resource.Success -> {
-                        binding.shimmerLayout.stopShimmer()
-                        binding.shimmerLayout.visibility = View.GONE
-                        adapter.setListData(list.data)
-                        adapter.notifyDataSetChanged()
-                        hideKeyboard()
-                    }
-                    is Resource.Failure -> {
-                        Log.e("ERROR", "${list.exception}")
-                    }
+    private fun loadStudent(){
+        viewModelOperation.searchDataStudent().observe(viewLifecycleOwner) {list ->
+            when(list){
+                is Resource.Loading -> {
+                    binding.piListStudent.visibility = View.VISIBLE
+                }
+                is Resource.Success -> {
+                    binding.piListStudent.visibility = View.GONE
+                    itemAdapter.clear()
+                    itemAdapter.addAll(list.data)
+                    adapter.notifyDataSetChanged()
+                }
+                is Resource.Failure -> {
+                    Log.e("ERROR", "${list.exception}")
                 }
             }
+        }
+    }
+
+    private fun filterList(){
+        binding.etDniList.addTextChangedListener {
+            val filterList = itemAdapter.filter { studentList -> studentList.dni.toString().lowercase().contains(it.toString().lowercase()) }
+            adapter.filterStudent(filterList as MutableList<DataStudent>)
         }
     }
 

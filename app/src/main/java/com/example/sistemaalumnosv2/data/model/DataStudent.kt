@@ -1,7 +1,11 @@
 package com.example.sistemaalumnosv2.data.model
 
 class DataStudent(
-     var surname: String,
-     var year: String,
-     var grade : Int
+     var dni : Int,
+     var name: String,
+     var surname : String,
+     var year : String,
+     var firstTerm : Int,
+     var secondTerm : Int,
+     var thirdTerm : Int
 )

@@ -2,8 +2,8 @@ package com.example.sistemaalumnosv2.presentation.view.fragment
 
 import android.content.Context.INPUT_METHOD_SERVICE
 import android.os.Bundle
+import android.text.InputFilter
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,7 +11,7 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
 import android.widget.Toast
-import androidx.core.content.ContextCompat.getSystemService
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.sistemaalumnosv2.R
 import com.example.sistemaalumnosv2.data.network.InsertStudentRepoImpl
@@ -21,11 +21,6 @@ import com.example.sistemaalumnosv2.presentation.view.activity.MainActivity
 import com.example.sistemaalumnosv2.presentation.viewmodel.ViewModelStudent
 import com.example.sistemaalumnosv2.presentation.viewmodel.ViewModelStudentFactory
 import com.example.sistemaalumnosv2.vo.Resource
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 
 class StudentDataFragment : Fragment() {
@@ -57,18 +52,15 @@ class StudentDataFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        validateText()
+
         dropMenu()
 
         getYear()
 
         binding.acYear.setOnClickListener {
             binding.acYear.error = null
-
-            CoroutineScope(Dispatchers.Main).launch {
-                hideKeyboard()
-                delay(500)
-                dropMenu()
-            }
+            dropMenu()
         }
 
         binding.btnSaveData.setOnClickListener {
@@ -145,13 +137,6 @@ class StudentDataFragment : Fragment() {
         binding.piInsert.visibility = View.GONE
     }
 
-    private fun hideKeyboard() {
-        if (view != null){
-            val imm = this.context?.getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
-            imm.hideSoftInputFromWindow(binding.viewStudent.windowToken, 0)
-        }
-    }
-
     private fun clearText(){
         val dni = binding.etDni
         val name = binding.etName
@@ -160,4 +145,24 @@ class StudentDataFragment : Fragment() {
         name.setText("")
         surname.setText("")
     }
+
+    private fun validateText(){
+
+        val nameEditText = binding.etName
+        val surnameEditText = binding.etSurname
+
+        val filter = InputFilter { source, start, end, dest, dstart, dend ->
+            for (i in start until end) {
+                if (!Character.isLetterOrDigit(source[i])) {
+                    return@InputFilter ""
+                }
+            }
+            null
+        }
+
+        nameEditText.filters = arrayOf(filter)
+        surnameEditText.filters = arrayOf(filter)
+    }
+
+
 }

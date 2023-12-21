@@ -8,22 +8,33 @@ import kotlinx.coroutines.tasks.await
 
 class SearchStudentRepoImpl:SearchStudentRepo {
 
-    //Logica para obtener los datos especificados del alumno
-    override suspend fun searchStudent(dni:Int): Resource<MutableList<GradeStudent>> {
+    //Logica para obtener los datos especificados del alumno (OperationFragment)
+    override suspend fun searchStudent(): Resource<MutableList<DataStudent>> {
 
-        val listStudent = mutableListOf<GradeStudent>()
+        val listStudent = mutableListOf<DataStudent>()
 
         val dataStudent = FirebaseFirestore.getInstance()
-            .collection("Student").document(dni.toString()).get().await()
+            .collection("Student").get().await()
 
-        val nameStudent = dataStudent.getString("Nombre")
-        val surnameStudent = dataStudent.getString("Apellido")
-        val yearStudent = dataStudent.getString("Curso")
-        val firstTermStudent = dataStudent.getLong("Trimestre 1")
-        val secondTermStudent = dataStudent.getLong("Trimestre 2")
-        val thirdTermStudent = dataStudent.getLong("Trimestre 3")
+        for (student in dataStudent){
+            val dniStudent = student.getLong("DNI")
+            val nameStudent = student.getString("Nombre")
+            val surnameStudent = student.getString("Apellido")
+            val yearStudent = student.getString("Curso")
+            val firstTermStudent = student.getLong("Trimestre 1")
+            val secondTermStudent = student.getLong("Trimestre 2")
+            val thirdTermStudent = student.getLong("Trimestre 3")
 
-         listStudent.add(GradeStudent(nameStudent!!,surnameStudent!!, yearStudent!!, firstTermStudent?.toInt()!!, secondTermStudent?.toInt()!!, thirdTermStudent?.toInt()!!))
+            listStudent.add(DataStudent(
+                dniStudent?.toInt()!!,
+                nameStudent!!,
+                surnameStudent!!,
+                yearStudent!!,
+                firstTermStudent?.toInt()!!,
+                secondTermStudent?.toInt()!!,
+                thirdTermStudent?.toInt()!!))
+
+        }
 
         return Resource.Success(listStudent)
     }
