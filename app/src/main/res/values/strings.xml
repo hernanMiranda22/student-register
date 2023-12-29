@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">SistemaAlumnos</string>
+    <string name="app_name">Sistema Alumnos</string>
 
     <string name="bottom_search">Buscar Alumno</string>
     <string name="bottom_student">Ingresar Alumno</string>
@@ -40,6 +40,8 @@
     <string name="buttonSaveTerm">Ingresar Trimestres</string>
 
     <string name="hintSearchBar">DNI del alumno</string>
+
+    <string name="tittle_SignIn">Iniciar Sesion</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

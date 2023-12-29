@@ -12,12 +12,11 @@ import android.view.inputmethod.InputMethodManager
 import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.sistemaalumnosv2.R
 import com.example.sistemaalumnosv2.data.model.DataStudent
 import com.example.sistemaalumnosv2.data.network.SearchStudentRepoImpl
 import com.example.sistemaalumnosv2.databinding.FragmentOperationBinding
 import com.example.sistemaalumnosv2.domain.SearchStudentUseCaseImpl
-import com.example.sistemaalumnosv2.presentation.view.activity.MainActivity
+import com.example.sistemaalumnosv2.presentation.view.activity.MenuActivity
 import com.example.sistemaalumnosv2.presentation.view.adapter.OperationAdapter
 import com.example.sistemaalumnosv2.presentation.viewmodel.ViewModelOperation
 import com.example.sistemaalumnosv2.presentation.viewmodel.ViewModelOperationFactory
@@ -92,8 +91,8 @@ class OperationFragment : Fragment() {
 
     //Inicialización del RecyclerView
     private fun initRecyclerView() {
-        adapter = OperationAdapter(itemAdapter, activity as MainActivity,)
-        binding.rvCardStudent.layoutManager = LinearLayoutManager(activity as MainActivity)
+        adapter = OperationAdapter(itemAdapter, activity as MenuActivity,)
+        binding.rvCardStudent.layoutManager = LinearLayoutManager(activity as MenuActivity)
         binding.rvCardStudent.adapter = adapter
 
         adapter.setOnClickListener(object : OperationAdapter.OnClickListener {

@@ -21,7 +21,7 @@ import com.example.sistemaalumnosv2.data.network.SearchGradeRepoImpl
 import com.example.sistemaalumnosv2.databinding.FragmentGradeBinding
 import com.example.sistemaalumnosv2.domain.GradeStudentUseCaseImpl
 import com.example.sistemaalumnosv2.domain.SearchGradeUseCaseImpl
-import com.example.sistemaalumnosv2.presentation.view.activity.MainActivity
+import com.example.sistemaalumnosv2.presentation.view.activity.MenuActivity
 import com.example.sistemaalumnosv2.presentation.view.adapter.GradeAdapter
 import com.example.sistemaalumnosv2.presentation.viewmodel.ViewModelGrade
 import com.example.sistemaalumnosv2.presentation.viewmodel.ViewModelGradeFactory
@@ -134,7 +134,7 @@ class GradeFragment : Fragment() {
 
                     }
                     is Resource.Success -> {
-                        Toast.makeText(activity as MainActivity, "Trimestres ingresados!", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(activity as MenuActivity, "Trimestres ingresados!", Toast.LENGTH_SHORT).show()
                     }
                     is Resource.Failure ->{
                         Log.e("ERRO INSERT", "${result.exception}")
@@ -147,8 +147,8 @@ class GradeFragment : Fragment() {
     }
     @SuppressLint("NotifyDataSetChanged")
     private fun initRecyclerView(){
-        gradeAdapter = GradeAdapter(activity as MainActivity)
-        binding.rvStudentData.layoutManager = LinearLayoutManager(activity as MainActivity)
+        gradeAdapter = GradeAdapter(activity as MenuActivity)
+        binding.rvStudentData.layoutManager = LinearLayoutManager(activity as MenuActivity)
         binding.rvStudentData.adapter = gradeAdapter
 
 

@@ -6,18 +6,18 @@ import androidx.fragment.app.add
 import androidx.fragment.app.commit
 import androidx.fragment.app.replace
 import com.example.sistemaalumnosv2.R
-import com.example.sistemaalumnosv2.databinding.ActivityMainBinding
+import com.example.sistemaalumnosv2.databinding.ActivityMenuBinding
 import com.example.sistemaalumnosv2.presentation.view.fragment.GradeFragment
 import com.example.sistemaalumnosv2.presentation.view.fragment.OperationFragment
 import com.example.sistemaalumnosv2.presentation.view.fragment.StudentDataFragment
 
-class MainActivity : AppCompatActivity() {
+class MenuActivity : AppCompatActivity() {
 
-    private lateinit var binding: ActivityMainBinding
+    private lateinit var binding: ActivityMenuBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityMainBinding.inflate(layoutInflater)
+        binding = ActivityMenuBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         loadNavigationBar()

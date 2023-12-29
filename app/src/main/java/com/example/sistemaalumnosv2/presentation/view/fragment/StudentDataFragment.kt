@@ -1,13 +1,11 @@
 package com.example.sistemaalumnosv2.presentation.view.fragment
 
-import android.content.Context.INPUT_METHOD_SERVICE
 import android.os.Bundle
 import android.text.InputFilter
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.inputmethod.InputMethodManager
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
 import android.widget.Toast
@@ -17,7 +15,7 @@ import com.example.sistemaalumnosv2.R
 import com.example.sistemaalumnosv2.data.network.InsertStudentRepoImpl
 import com.example.sistemaalumnosv2.databinding.FragmentStudenDataBinding
 import com.example.sistemaalumnosv2.domain.InsertUseCaseImpl
-import com.example.sistemaalumnosv2.presentation.view.activity.MainActivity
+import com.example.sistemaalumnosv2.presentation.view.activity.MenuActivity
 import com.example.sistemaalumnosv2.presentation.viewmodel.ViewModelStudent
 import com.example.sistemaalumnosv2.presentation.viewmodel.ViewModelStudentFactory
 import com.example.sistemaalumnosv2.vo.Resource
@@ -115,7 +113,7 @@ class StudentDataFragment : Fragment() {
                     }
 
                     is Resource.Success -> {
-                        Toast.makeText(activity as MainActivity, "Alumno ingresado exitosamente", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(activity as MenuActivity, "Alumno ingresado exitosamente", Toast.LENGTH_SHORT).show()
                         hideProgress()
                         clearText()
                     }
