@@ -1,5 +1,6 @@
 package com.example.sistemaalumnosv2.presentation.view.fragment
 
+import android.content.Intent
 import android.os.Bundle
 import android.text.InputFilter
 import android.util.Log
@@ -12,13 +13,16 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.sistemaalumnosv2.R
-import com.example.sistemaalumnosv2.data.network.InsertStudentRepoImpl
+import com.example.sistemaalumnosv2.data.network.insertstudent.InsertStudentRepoImpl
 import com.example.sistemaalumnosv2.databinding.FragmentStudenDataBinding
-import com.example.sistemaalumnosv2.domain.InsertUseCaseImpl
+import com.example.sistemaalumnosv2.domain.insertstudentcase.InsertUseCaseImpl
+import com.example.sistemaalumnosv2.presentation.view.activity.LoginActivity
 import com.example.sistemaalumnosv2.presentation.view.activity.MenuActivity
-import com.example.sistemaalumnosv2.presentation.viewmodel.ViewModelStudent
-import com.example.sistemaalumnosv2.presentation.viewmodel.ViewModelStudentFactory
+import com.example.sistemaalumnosv2.presentation.viewmodel.studentviewmodel.ViewModelStudent
+import com.example.sistemaalumnosv2.presentation.viewmodel.studentviewmodel.ViewModelStudentFactory
 import com.example.sistemaalumnosv2.vo.Resource
+import com.google.firebase.auth.FirebaseAuth
+
 
 
 class StudentDataFragment : Fragment() {
@@ -29,7 +33,8 @@ class StudentDataFragment : Fragment() {
 
     //Declaracion del ViewModel
     private val viewModelStudent by lazy { ViewModelProvider(this,
-        ViewModelStudentFactory(InsertUseCaseImpl(InsertStudentRepoImpl())))[ViewModelStudent::class.java] }
+        ViewModelStudentFactory(InsertUseCaseImpl(InsertStudentRepoImpl()))
+    )[ViewModelStudent::class.java] }
 
     private var _year = ""
 
@@ -56,6 +61,8 @@ class StudentDataFragment : Fragment() {
 
         getYear()
 
+        actionTopBar()
+
         binding.acYear.setOnClickListener {
             binding.acYear.error = null
             dropMenu()
@@ -64,13 +71,11 @@ class StudentDataFragment : Fragment() {
         binding.btnSaveData.setOnClickListener {
             observeInsert()
         }
-
-
     }
 
     //Obtiene el valor del DropMenu y lo guarda en la variable '_year'
     private fun getYear(){
-        binding.acYear.setOnItemClickListener { parent, view, position, id ->
+        binding.acYear.setOnItemClickListener { parent, _, position, _ ->
             val studentSelected = parent.getItemAtPosition(position) as String
             _year = studentSelected
         }
@@ -91,6 +96,8 @@ class StudentDataFragment : Fragment() {
     //Logica para ingresar los datos del alumno con un Oberver
     private fun observeInsert() {
 
+        val auth = FirebaseAuth.getInstance()
+
         val dni = binding.etDni.text.toString()
         val name = binding.etName.text.toString()
         val surname = binding.etSurname.text.toString()
@@ -106,7 +113,7 @@ class StudentDataFragment : Fragment() {
             binding.acYear.error = getString(R.string.helperErrorYear)
         } else {
 
-            viewModelStudent.insertNewStudent(dni.toInt(), name, surname, year).observe(viewLifecycleOwner) { result ->
+            viewModelStudent.insertNewStudent(dni.toInt(), name, surname, year, auth.uid.toString()).observe(viewLifecycleOwner) { result ->
                 when (result) {
                     is Resource.Loading -> {
                         showProgress()
@@ -119,7 +126,7 @@ class StudentDataFragment : Fragment() {
                     }
 
                     is Resource.Failure -> {
-                       Log.e("Erorr","${result.exception}")
+                        Log.e("Error","${result.exception}")
                     }
                 }
             }
@@ -149,7 +156,7 @@ class StudentDataFragment : Fragment() {
         val nameEditText = binding.etName
         val surnameEditText = binding.etSurname
 
-        val filter = InputFilter { source, start, end, dest, dstart, dend ->
+        val filter = InputFilter { source, start, end, _, _, _ ->
             for (i in start until end) {
                 if (!Character.isLetterOrDigit(source[i])) {
                     return@InputFilter ""
@@ -162,5 +169,18 @@ class StudentDataFragment : Fragment() {
         surnameEditText.filters = arrayOf(filter)
     }
 
-
+    private fun actionTopBar(){
+        binding.topAppBar.setOnMenuItemClickListener { menu ->
+            when(menu.itemId){
+                R.id.btnSignOut -> {
+                    FirebaseAuth.getInstance().signOut()
+                    val intent = Intent(activity as MenuActivity, LoginActivity::class.java)
+                    startActivity(intent)
+                    (activity as MenuActivity).finish()
+                    true
+                }
+                else -> false
+            }
+        }
+    }
 }

@@ -6,12 +6,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".presentation.view.fragment.SignUpFragment">
 
-    <!-- TODO: Update blank fragment layout -->
     <TextView
         android:id="@+id/tvTittleSignUp"
         android:layout_width="wrap_content"
         android:layout_height="40dp"
-        android:text="Crear cuenta"
+        android:text="@string/titleSingUpScreen"
         android:textColor="@color/md_theme_dark_scrim"
         android:textSize="28sp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -26,7 +25,7 @@
         style="?attr/textInputFilledStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Correo"
+        android:hint="@string/inputTextEmailUser"
         app:endIconMode="clear_text"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -37,7 +36,8 @@
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/etEmailSignUp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:inputType="textEmailAddress"/>
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -48,13 +48,16 @@
         style="?attr/textInputFilledStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Contrase;a"
+        android:hint="@string/inputTextPasswordUser"
         app:endIconMode="password_toggle"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/filledTextFieldEmail"
-        app:layout_constraintVertical_bias="0.1">
+        app:layout_constraintVertical_bias="0.1"
+        app:counterEnabled="true"
+        app:counterMaxLength="6"
+        app:helperText="@string/helperInputPassword">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/etPasswordSignUp"
@@ -70,7 +73,7 @@
         style="?attr/textInputFilledStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Repetir constrase;a"
+        android:hint="@string/inputTextRepeatPasswordUser"
         app:endIconMode="password_toggle"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -89,12 +92,24 @@
     <Button
         android:id="@+id/btnSignUp"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="Registrarse"
+        android:layout_height="55dp"
+        android:text="@string/buttonSingUpUser"
+        android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/filledTextFieldConfirm"
+        app:layout_constraintVertical_bias="0.1" />
+
+    <com.google.android.material.progressindicator.CircularProgressIndicator
+        android:id="@+id/cpSignUp"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnSignUp"
         app:layout_constraintVertical_bias="0.1" />
 
 

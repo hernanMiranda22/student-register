@@ -1,20 +1,43 @@
 package com.example.sistemaalumnosv2.presentation.view.fragment
 
+import android.app.Activity.RESULT_OK
+import android.content.Intent
 import android.os.Bundle
+import android.util.Log
+import android.util.Patterns
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.commit
 import androidx.fragment.app.replace
+import androidx.lifecycle.ViewModelProvider
 import com.example.sistemaalumnosv2.R
+import com.example.sistemaalumnosv2.data.model.ProviderType
+import com.example.sistemaalumnosv2.data.network.sigin.SignInUserRepoImpl
+import com.example.sistemaalumnosv2.data.network.signingoogle.SignInUserGoogleRepoImpl
 import com.example.sistemaalumnosv2.databinding.FragmentSignInBinding
+import com.example.sistemaalumnosv2.domain.signincase.SignInUseCaseImpl
+import com.example.sistemaalumnosv2.domain.signingooglecase.SignInGoogleUseCaseImpl
 import com.example.sistemaalumnosv2.presentation.view.activity.LoginActivity
+import com.example.sistemaalumnosv2.presentation.view.activity.MenuActivity
+import com.example.sistemaalumnosv2.presentation.viewmodel.signinviewmodel.ViewModelSignIn
+import com.example.sistemaalumnosv2.presentation.viewmodel.signinviewmodel.ViewModelSignInFactory
+import com.example.sistemaalumnosv2.vo.Resource
+import com.firebase.ui.auth.AuthUI
+import com.firebase.ui.auth.FirebaseAuthUIActivityResultContract
+import com.firebase.ui.auth.data.model.FirebaseAuthUIAuthenticationResult
+import com.google.firebase.auth.FirebaseAuth
 
 class SingInFragment : Fragment() {
 
     private var _binding : FragmentSignInBinding? = null
     private val binding get() = _binding!!
+
+    private val viewModelSignIn by lazy { ViewModelProvider(this,ViewModelSignInFactory(SignInUseCaseImpl(SignInUserRepoImpl()),
+        SignInGoogleUseCaseImpl(SignInUserGoogleRepoImpl())))[ViewModelSignIn::class.java] }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -32,6 +55,68 @@ class SingInFragment : Fragment() {
         binding.tvSignIn.setOnClickListener {
             navigateToSignUpScreen()
         }
+
+        binding.btnSignIn.setOnClickListener {
+            observerSignIn()
+        }
+
+        checkGoogleAccount()
+    }
+
+    private fun observerSignIn() {
+        val email = binding.etEmailSignIn.text.toString()
+        val password = binding.etPasswordSignIn.text.toString()
+
+        if (email.isEmpty() || !isValidEmail(email)){
+            binding.etEmailSignIn.error = getString(R.string.helperErrorEmail)
+        }else if (password.isEmpty()){
+            binding.etPasswordSignIn.error = getString(R.string.helperErrorPassword)
+        }else{
+            viewModelSignIn.signInWithEmail(email, password).observe(viewLifecycleOwner){result ->
+                when(result){
+                    is Resource.Loading ->{
+                        binding.pbSignIn.visibility = View.VISIBLE
+                    }
+                    is Resource.Success ->{
+                        binding.pbSignIn.visibility = View.GONE
+                        navigateToMainMenu(email, ProviderType.EMAIL)
+                    }
+                    is Resource.Failure ->{
+                        Log.e("Error SingIn","${result.exception}")
+                    }
+                }
+            }
+        }
+    }
+
+    private fun checkGoogleAccount(){
+
+        val signInLauncher = registerForActivityResult(FirebaseAuthUIActivityResultContract()) { res ->
+            this.onSignInResult(res)
+        }
+        // Choose authentication providers
+        val providers = arrayListOf(
+            AuthUI.IdpConfig.GoogleBuilder().build()
+        )
+
+        // Create and launch sign-in intent
+        binding.btnSignUpGoogle.setOnClickListener {
+            val signInIntent = AuthUI.getInstance()
+                .createSignInIntentBuilder()
+                .setAvailableProviders(providers)
+                .build()
+            signInLauncher.launch(signInIntent)
+        }
+    }
+
+    private fun onSignInResult(result: FirebaseAuthUIAuthenticationResult) {
+        val response = result.idpResponse
+        if (result.resultCode == RESULT_OK) {
+            // Successfully signed in
+            val user = FirebaseAuth.getInstance().currentUser
+            val intent = Intent(activity as LoginActivity, MenuActivity::class.java)
+            startActivity(intent)
+        }
     }
 
     private fun navigateToSignUpScreen() {
@@ -41,4 +126,15 @@ class SingInFragment : Fragment() {
         }
     }
 
+    private fun navigateToMainMenu(email: String, provider : ProviderType){
+        val intent =  Intent(activity as LoginActivity, MenuActivity::class.java).apply {
+            putExtra("email", email)
+            putExtra("provider", provider.name)
+        }
+        startActivity(intent)
+    }
+
+    private fun isValidEmail(email: String):Boolean {
+        return Patterns.EMAIL_ADDRESS.matcher(email).matches()
+    }
 }

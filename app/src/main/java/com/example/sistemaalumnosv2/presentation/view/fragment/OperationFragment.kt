@@ -13,14 +13,15 @@ import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.sistemaalumnosv2.data.model.DataStudent
-import com.example.sistemaalumnosv2.data.network.SearchStudentRepoImpl
+import com.example.sistemaalumnosv2.data.network.searchstudent.SearchStudentRepoImpl
 import com.example.sistemaalumnosv2.databinding.FragmentOperationBinding
-import com.example.sistemaalumnosv2.domain.SearchStudentUseCaseImpl
+import com.example.sistemaalumnosv2.domain.searchstudentcase.SearchStudentUseCaseImpl
 import com.example.sistemaalumnosv2.presentation.view.activity.MenuActivity
 import com.example.sistemaalumnosv2.presentation.view.adapter.OperationAdapter
-import com.example.sistemaalumnosv2.presentation.viewmodel.ViewModelOperation
-import com.example.sistemaalumnosv2.presentation.viewmodel.ViewModelOperationFactory
+import com.example.sistemaalumnosv2.presentation.viewmodel.operation.ViewModelOperation
+import com.example.sistemaalumnosv2.presentation.viewmodel.operation.ViewModelOperationFactory
 import com.example.sistemaalumnosv2.vo.Resource
+import com.google.firebase.auth.FirebaseAuth
 
 class OperationFragment : Fragment() {
 
@@ -28,7 +29,8 @@ class OperationFragment : Fragment() {
     private val binding get() = _binding!!
 
     private val viewModelOperation by lazy { ViewModelProvider(this,
-        ViewModelOperationFactory(SearchStudentUseCaseImpl(SearchStudentRepoImpl())))[ViewModelOperation::class.java] }
+        ViewModelOperationFactory(SearchStudentUseCaseImpl(SearchStudentRepoImpl()))
+    )[ViewModelOperation::class.java] }
 
     private lateinit var adapter : OperationAdapter
 
@@ -64,7 +66,8 @@ class OperationFragment : Fragment() {
 
     @SuppressLint("NotifyDataSetChanged")
     private fun loadStudent(){
-        viewModelOperation.searchDataStudent().observe(viewLifecycleOwner) {list ->
+        val auth = FirebaseAuth.getInstance()
+        viewModelOperation.searchDataStudent(auth.uid.toString()).observe(viewLifecycleOwner) {list ->
             when(list){
                 is Resource.Loading -> {
                     binding.piListStudent.visibility = View.VISIBLE

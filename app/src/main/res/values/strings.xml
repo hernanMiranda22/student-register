@@ -1,9 +1,12 @@
 <resources>
     <string name="app_name">Sistema Alumnos</string>
 
+    <string name="top_logout">Cerrar Sesion</string>
+
     <string name="bottom_search">Buscar Alumno</string>
     <string name="bottom_student">Ingresar Alumno</string>
     <string name="bottom_grade">Ingresar Trimestre</string>
+    <string name="bottom_user">Usuario</string>
 
     <string name="description_icon_add">PersonAddIcon</string>
 
@@ -15,13 +18,25 @@
     <string name="inputTextFirstTerm">Primer trimestre</string>
     <string name="inputTextSecondTerm">Segundo trimestre</string>
     <string name="inputTextThirdTerm">Tercer Trimestre</string>
+    <string name="inputTextEmailUser">Correo</string>
+    <string name="inputTextPasswordUser">Contraseña</string>
+    <string name="inputTextRepeatPasswordUser">Repetir Contraseña</string>
+    <string name="inputTextSingInWithGoogle">Iniciar sesion con Goole</string>
 
     <string name="helperInputDni">Sin puntos</string>
+    <string name="helperInputPassword">Minimo 6 caracteres</string>
+
+
     <string name="helperErrorDni">Coloque un DNI</string>
     <string name="helperErrorName">Coloque un Nombre</string>
     <string name="helperErrorSurname">Coloque un Apellido</string>
     <string name="helperErrorYear">Seleccione el año</string>
     <string name="helperErrorGrade">Coloque una calificación</string>
+    <string name="helperErrorEmail">Coloque un correo correctamente</string>
+    <string name="helperErrorEmailComplete">Coloque el correo correctamente</string>
+    <string name="helperErrorPassword">Coloque una contraseña</string>
+    <string name="helperErrorInvalidUser">Constraseña o correo incorrectos</string>
+    <string name="helperErrorEmailUsing">El correo ya esta en uso</string>
 
     <string name="helperInputTerm">Si hay un 0, el alumno no esta calificado</string>
 
@@ -38,11 +53,19 @@
     <string name="buttonSaveData">Ingresar Alumno</string>
     <string name="buttonCreatePDF">Crear PDF</string>
     <string name="buttonSaveTerm">Ingresar Trimestres</string>
+    <string name="buttonSingUpUser">Registrese</string>
 
     <string name="hintSearchBar">DNI del alumno</string>
 
-    <string name="tittle_SignIn">Iniciar Sesion</string>
+    <string name="textUserSingIn">Iniciar Sesion</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="textRegister">¿No tiene una cuenta?</string>
+    <string name="textSingUpUser">Registrese</string>
+    <string name="textUserEmail">Email</string>
+    <string name="textUserProvider">Proveedor</string>
+
+    <string name="titleSingUpScreen">Crear cuenta</string>
+    <string name="titleSplashScreen">Registro Alumnos</string>
+
 </resources>

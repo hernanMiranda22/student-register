@@ -16,16 +16,17 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.sistemaalumnosv2.R
 import com.example.sistemaalumnosv2.data.model.GradeStudent
-import com.example.sistemaalumnosv2.data.network.GradeStudentRepoImpl
-import com.example.sistemaalumnosv2.data.network.SearchGradeRepoImpl
+import com.example.sistemaalumnosv2.data.network.insertgrade.GradeStudentRepoImpl
+import com.example.sistemaalumnosv2.data.network.searchgrade.SearchGradeRepoImpl
 import com.example.sistemaalumnosv2.databinding.FragmentGradeBinding
-import com.example.sistemaalumnosv2.domain.GradeStudentUseCaseImpl
-import com.example.sistemaalumnosv2.domain.SearchGradeUseCaseImpl
+import com.example.sistemaalumnosv2.domain.insertgradecase.GradeStudentUseCaseImpl
+import com.example.sistemaalumnosv2.domain.searchgradecase.SearchGradeUseCaseImpl
 import com.example.sistemaalumnosv2.presentation.view.activity.MenuActivity
 import com.example.sistemaalumnosv2.presentation.view.adapter.GradeAdapter
-import com.example.sistemaalumnosv2.presentation.viewmodel.ViewModelGrade
-import com.example.sistemaalumnosv2.presentation.viewmodel.ViewModelGradeFactory
+import com.example.sistemaalumnosv2.presentation.viewmodel.grade.ViewModelGrade
+import com.example.sistemaalumnosv2.presentation.viewmodel.grade.ViewModelGradeFactory
 import com.example.sistemaalumnosv2.vo.Resource
+import com.google.firebase.auth.FirebaseAuth
 
 
 class GradeFragment : Fragment() {
@@ -34,12 +35,17 @@ class GradeFragment : Fragment() {
     private val binding get() = _binding!!
 
     private val viewModelGrade : ViewModelGrade by lazy {
-        ViewModelProvider(this, ViewModelGradeFactory(SearchGradeUseCaseImpl(SearchGradeRepoImpl()),
-            GradeStudentUseCaseImpl(GradeStudentRepoImpl())))[ViewModelGrade::class.java]
+        ViewModelProvider(this, ViewModelGradeFactory(
+            SearchGradeUseCaseImpl(SearchGradeRepoImpl()),
+            GradeStudentUseCaseImpl(GradeStudentRepoImpl())
+        )
+        )[ViewModelGrade::class.java]
     }
 
     private lateinit var gradeAdapter: GradeAdapter
     private val contentRecycler = mutableListOf<GradeStudent>()
+
+    private val auth = FirebaseAuth.getInstance()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -78,6 +84,7 @@ class GradeFragment : Fragment() {
 
     @SuppressLint("NotifyDataSetChanged")
     private fun getStudentData() {
+
         val editTextFirstTerm = binding.etFirstTerm
         val editTextSecondTerm = binding.etSecondTerm
         val editTextThirdTerm = binding.etThirdTerm
@@ -86,7 +93,7 @@ class GradeFragment : Fragment() {
         if (dni.isEmpty()){
             binding.etDniGrade.error = getString(R.string.helperErrorDni)
         }else{
-            viewModelGrade.getDataAndTerm(dni.toInt()).observe(viewLifecycleOwner){ result ->
+            viewModelGrade.getDataAndTerm(dni.toInt(), auth.uid.toString()).observe(viewLifecycleOwner){ result ->
                 when(result){
                     is Resource.Loading -> {
                         binding.rvStudentData.visibility = View.GONE
@@ -128,13 +135,16 @@ class GradeFragment : Fragment() {
         }else if (thirdTerm.isEmpty() || thirdTerm.toInt() == 0){
             binding.etThirdTerm.error = getString(R.string.helperErrorGrade)
         }else{
-            viewModelGrade.insertGrade(dni.toInt(), firstTerm.toInt(), secondTerm.toInt(),  thirdTerm.toInt()).observe(viewLifecycleOwner){result ->
+            viewModelGrade.insertGrade(dni.toInt(), firstTerm.toInt(), secondTerm.toInt(),  thirdTerm.toInt(), auth.uid.toString()).observe(viewLifecycleOwner){result ->
                 when(result){
                     is Resource.Loading ->{
-
+                        binding.cpGrade.visibility = View.VISIBLE
                     }
                     is Resource.Success -> {
+                        binding.cpGrade.visibility = View.GONE
                         Toast.makeText(activity as MenuActivity, "Trimestres ingresados!", Toast.LENGTH_SHORT).show()
+                        initRecyclerView()
+                        clearField()
                     }
                     is Resource.Failure ->{
                         Log.e("ERRO INSERT", "${result.exception}")
@@ -195,5 +205,10 @@ class GradeFragment : Fragment() {
         })
     }
 
-
+    private fun clearField(){
+        binding.etDniGrade.setText("")
+        binding.etFirstTerm.setText("")
+        binding.etSecondTerm.setText("")
+        binding.etThirdTerm.setText("")
+    }
 }
