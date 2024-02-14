@@ -48,11 +48,6 @@ class GradeFragment : Fragment() {
     private val auth = FirebaseAuth.getInstance()
 
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
