@@ -4,8 +4,9 @@ import com.example.sistemaalumnosv2.data.model.GradeStudent
 import com.example.sistemaalumnosv2.vo.Resource
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.tasks.await
+import javax.inject.Inject
 
-class SearchGradeRepoImpl: SearchGradeRepo {
+class SearchGradeRepoImpl @Inject constructor(): SearchGradeRepo {
 
     //Logica para obtener los datos e ingresar los trimestres (GradeStudent)
     override suspend fun getGradeStudent(dni: Int,uid: String): Resource<MutableList<GradeStudent>> {

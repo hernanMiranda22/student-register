@@ -3,8 +3,9 @@ package com.example.sistemaalumnosv2.data.network.insertgrade
 import com.example.sistemaalumnosv2.vo.Resource
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.tasks.await
+import javax.inject.Inject
 
-class GradeStudentRepoImpl: GradeStudentRepo {
+class GradeStudentRepoImpl @Inject constructor(): GradeStudentRepo {
 
     //Logica para ingresar los trimestres del alumno (GradeFragment)
     override suspend fun insertGrade(dni:Int, firstTerm:Int,secondTerm:Int,thirdTerm:Int, uid : String): Resource<Int> {

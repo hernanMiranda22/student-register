@@ -5,9 +5,13 @@ import androidx.lifecycle.liveData
 import com.example.sistemaalumnosv2.domain.insertgradecase.GradeStudentUseCase
 import com.example.sistemaalumnosv2.domain.searchgradecase.SearchGradeUseCase
 import com.example.sistemaalumnosv2.vo.Resource
+import dagger.hilt.android.lifecycle.HiltViewModel
+import dagger.hilt.android.scopes.ViewModelScoped
 import kotlinx.coroutines.Dispatchers
+import javax.inject.Inject
 
-class ViewModelGrade(private val searchGradeUseCase: SearchGradeUseCase, private val gradeStudentUseCase: GradeStudentUseCase):ViewModel() {
+@HiltViewModel
+class ViewModelGrade @Inject constructor(private val searchGradeUseCase: SearchGradeUseCase, private val gradeStudentUseCase: GradeStudentUseCase):ViewModel() {
 
     private val dispatchersIO = Dispatchers.IO
     fun getDataAndTerm(dni:Int, uid: String) = liveData(dispatchersIO) {

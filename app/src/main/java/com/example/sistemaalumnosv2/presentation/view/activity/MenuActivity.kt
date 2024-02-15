@@ -10,7 +10,9 @@ import com.example.sistemaalumnosv2.databinding.ActivityMenuBinding
 import com.example.sistemaalumnosv2.presentation.view.fragment.GradeFragment
 import com.example.sistemaalumnosv2.presentation.view.fragment.OperationFragment
 import com.example.sistemaalumnosv2.presentation.view.fragment.StudentDataFragment
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MenuActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMenuBinding

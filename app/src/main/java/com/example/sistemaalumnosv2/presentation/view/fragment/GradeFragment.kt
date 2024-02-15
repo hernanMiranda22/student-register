@@ -12,35 +12,33 @@ import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintSet
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.sistemaalumnosv2.R
 import com.example.sistemaalumnosv2.data.model.GradeStudent
-import com.example.sistemaalumnosv2.data.network.insertgrade.GradeStudentRepoImpl
-import com.example.sistemaalumnosv2.data.network.searchgrade.SearchGradeRepoImpl
 import com.example.sistemaalumnosv2.databinding.FragmentGradeBinding
-import com.example.sistemaalumnosv2.domain.insertgradecase.GradeStudentUseCaseImpl
-import com.example.sistemaalumnosv2.domain.searchgradecase.SearchGradeUseCaseImpl
 import com.example.sistemaalumnosv2.presentation.view.activity.MenuActivity
 import com.example.sistemaalumnosv2.presentation.view.adapter.GradeAdapter
 import com.example.sistemaalumnosv2.presentation.viewmodel.grade.ViewModelGrade
-import com.example.sistemaalumnosv2.presentation.viewmodel.grade.ViewModelGradeFactory
 import com.example.sistemaalumnosv2.vo.Resource
 import com.google.firebase.auth.FirebaseAuth
+import dagger.hilt.android.AndroidEntryPoint
 
-
+@AndroidEntryPoint
 class GradeFragment : Fragment() {
 
     private var _binding: FragmentGradeBinding? = null
     private val binding get() = _binding!!
 
-    private val viewModelGrade : ViewModelGrade by lazy {
-        ViewModelProvider(this, ViewModelGradeFactory(
-            SearchGradeUseCaseImpl(SearchGradeRepoImpl()),
-            GradeStudentUseCaseImpl(GradeStudentRepoImpl())
-        )
-        )[ViewModelGrade::class.java]
-    }
+    private val viewModelGrade : ViewModelGrade by viewModels()
+
+//    private val viewModelGrade : ViewModelGrade by lazy {
+//        ViewModelProvider(this, ViewModelGradeFactory(
+//            SearchGradeUseCaseImpl(SearchGradeRepoImpl()),
+//            GradeStudentUseCaseImpl(GradeStudentRepoImpl())
+//        )
+//        )[ViewModelGrade::class.java]
+//    }
 
     private lateinit var gradeAdapter: GradeAdapter
     private val contentRecycler = mutableListOf<GradeStudent>()
