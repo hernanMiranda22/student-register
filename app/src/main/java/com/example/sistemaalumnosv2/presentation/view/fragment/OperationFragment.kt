@@ -10,27 +10,28 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import androidx.core.widget.addTextChangedListener
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.sistemaalumnosv2.data.model.DataStudent
-import com.example.sistemaalumnosv2.data.network.searchstudent.SearchStudentRepoImpl
 import com.example.sistemaalumnosv2.databinding.FragmentOperationBinding
-import com.example.sistemaalumnosv2.domain.searchstudentcase.SearchStudentUseCaseImpl
 import com.example.sistemaalumnosv2.presentation.view.activity.MenuActivity
 import com.example.sistemaalumnosv2.presentation.view.adapter.OperationAdapter
 import com.example.sistemaalumnosv2.presentation.viewmodel.operation.ViewModelOperation
-import com.example.sistemaalumnosv2.presentation.viewmodel.operation.ViewModelOperationFactory
 import com.example.sistemaalumnosv2.vo.Resource
 import com.google.firebase.auth.FirebaseAuth
+import dagger.hilt.android.AndroidEntryPoint
 
+
+@AndroidEntryPoint
 class OperationFragment : Fragment() {
 
     private var _binding : FragmentOperationBinding? = null
     private val binding get() = _binding!!
 
-    private val viewModelOperation by lazy { ViewModelProvider(this,
-        ViewModelOperationFactory(SearchStudentUseCaseImpl(SearchStudentRepoImpl()))
-    )[ViewModelOperation::class.java] }
+    private val viewModelOperation : ViewModelOperation by viewModels()
+//    private val viewModelOperation by lazy { ViewModelProvider(this,
+//        ViewModelOperationFactory(SearchStudentUseCaseImpl(SearchStudentRepoImpl()))
+//    )[ViewModelOperation::class.java] }
 
     private lateinit var adapter : OperationAdapter
 

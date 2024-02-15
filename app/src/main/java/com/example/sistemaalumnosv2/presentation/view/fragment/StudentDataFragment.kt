@@ -11,20 +11,18 @@ import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.viewModels
 import com.example.sistemaalumnosv2.R
-import com.example.sistemaalumnosv2.data.network.insertstudent.InsertStudentRepoImpl
 import com.example.sistemaalumnosv2.databinding.FragmentStudenDataBinding
-import com.example.sistemaalumnosv2.domain.insertstudentcase.InsertUseCaseImpl
 import com.example.sistemaalumnosv2.presentation.view.activity.LoginActivity
 import com.example.sistemaalumnosv2.presentation.view.activity.MenuActivity
 import com.example.sistemaalumnosv2.presentation.viewmodel.studentviewmodel.ViewModelStudent
-import com.example.sistemaalumnosv2.presentation.viewmodel.studentviewmodel.ViewModelStudentFactory
 import com.example.sistemaalumnosv2.vo.Resource
 import com.google.firebase.auth.FirebaseAuth
+import dagger.hilt.android.AndroidEntryPoint
 
 
-
+@AndroidEntryPoint
 class StudentDataFragment : Fragment() {
 
     //Declaracion del ViewBingin
@@ -32,9 +30,10 @@ class StudentDataFragment : Fragment() {
     private val binding get() = _binding!!
 
     //Declaracion del ViewModel
-    private val viewModelStudent by lazy { ViewModelProvider(this,
-        ViewModelStudentFactory(InsertUseCaseImpl(InsertStudentRepoImpl()))
-    )[ViewModelStudent::class.java] }
+    private val viewModelStudent : ViewModelStudent by viewModels()
+//    private val viewModelStudent by lazy { ViewModelProvider(this,
+//        ViewModelStudentFactory(InsertUseCaseImpl(InsertStudentRepoImpl()))
+//    )[ViewModelStudent::class.java] }
 
     private var _year = ""
 

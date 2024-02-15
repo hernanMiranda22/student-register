@@ -5,8 +5,9 @@ import androidx.lifecycle.liveData
 import com.example.sistemaalumnosv2.domain.signupcase.SignUpUserUseCase
 import com.example.sistemaalumnosv2.vo.Resource
 import kotlinx.coroutines.Dispatchers
+import javax.inject.Inject
 
-class ViewModelSignUp(private val signUpUserUseCase: SignUpUserUseCase):ViewModel() {
+class ViewModelSignUp @Inject constructor(private val signUpUserUseCase: SignUpUserUseCase):ViewModel() {
 
     private val dispatchers = Dispatchers.IO
 

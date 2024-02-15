@@ -9,34 +9,31 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.commit
 import androidx.fragment.app.replace
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.viewModels
 import com.example.sistemaalumnosv2.R
 import com.example.sistemaalumnosv2.data.model.ProviderType
-import com.example.sistemaalumnosv2.data.network.sigin.SignInUserRepoImpl
-import com.example.sistemaalumnosv2.data.network.signingoogle.SignInUserGoogleRepoImpl
 import com.example.sistemaalumnosv2.databinding.FragmentSignInBinding
-import com.example.sistemaalumnosv2.domain.signincase.SignInUseCaseImpl
-import com.example.sistemaalumnosv2.domain.signingooglecase.SignInGoogleUseCaseImpl
 import com.example.sistemaalumnosv2.presentation.view.activity.LoginActivity
 import com.example.sistemaalumnosv2.presentation.view.activity.MenuActivity
 import com.example.sistemaalumnosv2.presentation.viewmodel.signinviewmodel.ViewModelSignIn
-import com.example.sistemaalumnosv2.presentation.viewmodel.signinviewmodel.ViewModelSignInFactory
 import com.example.sistemaalumnosv2.vo.Resource
 import com.firebase.ui.auth.AuthUI
 import com.firebase.ui.auth.FirebaseAuthUIActivityResultContract
 import com.firebase.ui.auth.data.model.FirebaseAuthUIAuthenticationResult
 import com.google.firebase.auth.FirebaseAuth
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class SingInFragment : Fragment() {
 
     private var _binding : FragmentSignInBinding? = null
     private val binding get() = _binding!!
 
-    private val viewModelSignIn by lazy { ViewModelProvider(this,ViewModelSignInFactory(SignInUseCaseImpl(SignInUserRepoImpl()),
-        SignInGoogleUseCaseImpl(SignInUserGoogleRepoImpl())))[ViewModelSignIn::class.java] }
+    private val viewModelSignIn : ViewModelSignIn by viewModels()
+//    private val viewModelSignIn by lazy { ViewModelProvider(this,ViewModelSignInFactory(SignInUseCaseImpl(SingInUserRepoImpl()),
+//        SignInGoogleUseCaseImpl(SignInUserGoogleRepoImpl())))[ViewModelSignIn::class.java] }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

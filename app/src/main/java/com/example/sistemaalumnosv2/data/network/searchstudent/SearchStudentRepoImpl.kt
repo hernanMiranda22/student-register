@@ -4,8 +4,9 @@ import com.example.sistemaalumnosv2.data.model.DataStudent
 import com.example.sistemaalumnosv2.vo.Resource
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.tasks.await
+import javax.inject.Inject
 
-class SearchStudentRepoImpl: SearchStudentRepo {
+class SearchStudentRepoImpl @Inject constructor(): SearchStudentRepo {
 
     //Logica para obtener los datos especificados del alumno (OperationFragment)
     override suspend fun searchStudent(uid: String): Resource<MutableList<DataStudent>> {

@@ -4,9 +4,12 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.liveData
 import com.example.sistemaalumnosv2.domain.insertstudentcase.InsertUseCase
 import com.example.sistemaalumnosv2.vo.Resource
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
+import javax.inject.Inject
 
-class ViewModelStudent(private val insertUseCase: InsertUseCase):ViewModel() {
+@HiltViewModel
+class ViewModelStudent @Inject constructor(private val insertUseCase: InsertUseCase):ViewModel() {
 
 
     fun insertNewStudent(dni:Int, name:String, surname:String, year:String, idUser: String) = liveData(Dispatchers.IO) {

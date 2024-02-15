@@ -3,8 +3,9 @@ package com.example.sistemaalumnosv2.data.network.insertstudent
 import com.example.sistemaalumnosv2.vo.Resource
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.tasks.await
+import javax.inject.Inject
 
-class InsertStudentRepoImpl: InsertStudentRepo {
+class InsertStudentRepoImpl @Inject constructor(): InsertStudentRepo {
 
     //Logica para ingresar los datos del alumno(StudentDataFragment)
     override suspend fun insertStudent(dni:Int, name:String, surname:String, year:String, idUser: String): Resource<Int> {

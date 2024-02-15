@@ -1,9 +1,6 @@
 package com.example.sistemaalumnosv2.presentation.view.fragment
 
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextUtils
-import android.text.TextWatcher
 import android.util.Log
 import android.util.Patterns
 import androidx.fragment.app.Fragment
@@ -11,28 +8,28 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.viewModels
 import com.example.sistemaalumnosv2.R
-import com.example.sistemaalumnosv2.data.network.signupemail.SignUpUserRepoImpl
 import com.example.sistemaalumnosv2.databinding.FragmentSignUpBinding
-import com.example.sistemaalumnosv2.domain.signupcase.SignUpUserCaseImpl
 import com.example.sistemaalumnosv2.presentation.view.activity.LoginActivity
 import com.example.sistemaalumnosv2.presentation.viewmodel.signupviewmodel.ViewModelSignUp
-import com.example.sistemaalumnosv2.presentation.viewmodel.signupviewmodel.ViewModelSignUpFactory
 import com.example.sistemaalumnosv2.vo.Resource
 import com.google.firebase.auth.FirebaseAuth
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class SignUpFragment : Fragment() {
 
     private var _binding : FragmentSignUpBinding? = null
     private val binding get() = _binding!!
 
-    private val viewModelSignUp by lazy { ViewModelProvider(this, ViewModelSignUpFactory(
-        SignUpUserCaseImpl(
-        SignUpUserRepoImpl()
-    )
-    )
-    )[ViewModelSignUp::class.java] }
+    private val viewModelSignUp : ViewModelSignUp by viewModels()
+//    private val viewModelSignUp by lazy { ViewModelProvider(this, ViewModelSignUpFactory(
+//        SignUpUserCaseImpl(
+//        SignUpUserRepoImpl()
+//    )
+//    )
+//    )[ViewModelSignUp::class.java] }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

@@ -4,8 +4,9 @@ import com.example.sistemaalumnosv2.vo.Resource
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.tasks.await
+import javax.inject.Inject
 
-class SignUpUserRepoImpl: SignUpUserRepo {
+class SignUpUserRepoImpl @Inject constructor(): SignUpUserRepo {
     override suspend fun signUpEmailAndPassword(email: String, password: String): Resource<Int> {
 
         val studentMap = hashMapOf(
