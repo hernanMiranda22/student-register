@@ -1,4 +1,4 @@
-package com.example.sistemaalumnosv2.presentation.view.fragment
+package com.example.sistemaalumnosv2.ui.view.fragment
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -14,9 +14,9 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.sistemaalumnosv2.data.model.DataStudent
 import com.example.sistemaalumnosv2.databinding.FragmentOperationBinding
-import com.example.sistemaalumnosv2.presentation.view.activity.MenuActivity
-import com.example.sistemaalumnosv2.presentation.view.adapter.OperationAdapter
-import com.example.sistemaalumnosv2.presentation.viewmodel.operation.ViewModelOperation
+import com.example.sistemaalumnosv2.ui.view.activity.MenuActivity
+import com.example.sistemaalumnosv2.ui.view.adapter.OperationAdapter
+import com.example.sistemaalumnosv2.ui.viewmodel.operation.ViewModelOperation
 import com.example.sistemaalumnosv2.vo.Resource
 import com.google.firebase.auth.FirebaseAuth
 import dagger.hilt.android.AndroidEntryPoint
@@ -58,6 +58,10 @@ class OperationFragment : Fragment() {
 
         filterList()
 
+        binding.srContainer.setOnRefreshListener {
+            loadStudent()
+            binding.srContainer.isRefreshing = false
+        }
     }
 
     @SuppressLint("NotifyDataSetChanged")

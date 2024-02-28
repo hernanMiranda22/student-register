@@ -1,4 +1,4 @@
-package com.example.sistemaalumnosv2.presentation.view.adapter
+package com.example.sistemaalumnosv2.ui.view.adapter
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -9,7 +9,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.sistemaalumnosv2.R
 import com.example.sistemaalumnosv2.data.model.DataStudent
 
-import com.example.sistemaalumnosv2.data.model.GradeStudent
 import com.example.sistemaalumnosv2.databinding.CardViewStudentBinding
 
 class OperationAdapter(private var student : MutableList<DataStudent>, context:Context): RecyclerView.Adapter<OperationAdapter.ViewHolder>() {

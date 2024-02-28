@@ -1,4 +1,4 @@
-package com.example.sistemaalumnosv2.presentation.viewmodel.grade
+package com.example.sistemaalumnosv2.ui.viewmodel.grade
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.liveData
@@ -6,7 +6,6 @@ import com.example.sistemaalumnosv2.domain.insertgradecase.GradeStudentUseCase
 import com.example.sistemaalumnosv2.domain.searchgradecase.SearchGradeUseCase
 import com.example.sistemaalumnosv2.vo.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
-import dagger.hilt.android.scopes.ViewModelScoped
 import kotlinx.coroutines.Dispatchers
 import javax.inject.Inject
 

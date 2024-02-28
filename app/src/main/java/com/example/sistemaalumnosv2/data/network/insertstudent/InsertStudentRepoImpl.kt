@@ -1,8 +1,10 @@
 package com.example.sistemaalumnosv2.data.network.insertstudent
 
+import android.util.Log
 import com.example.sistemaalumnosv2.vo.Resource
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.tasks.await
+import kotlinx.coroutines.withTimeout
 import javax.inject.Inject
 
 class InsertStudentRepoImpl @Inject constructor(): InsertStudentRepo {
@@ -20,7 +22,6 @@ class InsertStudentRepoImpl @Inject constructor(): InsertStudentRepo {
             "Trimestre 3" to 0
 
         )
-
         //Logica de firebase
         FirebaseFirestore.getInstance().collection("User")
             .document(idUser).collection("Student").document(dni.toString())

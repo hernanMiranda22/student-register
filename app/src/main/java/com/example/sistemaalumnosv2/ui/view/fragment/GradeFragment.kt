@@ -1,4 +1,4 @@
-package com.example.sistemaalumnosv2.presentation.view.fragment
+package com.example.sistemaalumnosv2.ui.view.fragment
 
 import android.annotation.SuppressLint
 import android.os.Bundle
@@ -17,9 +17,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.sistemaalumnosv2.R
 import com.example.sistemaalumnosv2.data.model.GradeStudent
 import com.example.sistemaalumnosv2.databinding.FragmentGradeBinding
-import com.example.sistemaalumnosv2.presentation.view.activity.MenuActivity
-import com.example.sistemaalumnosv2.presentation.view.adapter.GradeAdapter
-import com.example.sistemaalumnosv2.presentation.viewmodel.grade.ViewModelGrade
+import com.example.sistemaalumnosv2.ui.view.activity.MenuActivity
+import com.example.sistemaalumnosv2.ui.view.adapter.GradeAdapter
+import com.example.sistemaalumnosv2.ui.viewmodel.grade.ViewModelGrade
 import com.example.sistemaalumnosv2.vo.Resource
 import com.google.firebase.auth.FirebaseAuth
 import dagger.hilt.android.AndroidEntryPoint

@@ -1,4 +1,4 @@
-package com.example.sistemaalumnosv2.presentation.view.fragment
+package com.example.sistemaalumnosv2.ui.view.fragment
 
 import android.content.Intent
 import android.os.Bundle
@@ -14,9 +14,9 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.example.sistemaalumnosv2.R
 import com.example.sistemaalumnosv2.databinding.FragmentStudenDataBinding
-import com.example.sistemaalumnosv2.presentation.view.activity.LoginActivity
-import com.example.sistemaalumnosv2.presentation.view.activity.MenuActivity
-import com.example.sistemaalumnosv2.presentation.viewmodel.studentviewmodel.ViewModelStudent
+import com.example.sistemaalumnosv2.ui.view.activity.LoginActivity
+import com.example.sistemaalumnosv2.ui.view.activity.MenuActivity
+import com.example.sistemaalumnosv2.ui.viewmodel.studentviewmodel.ViewModelStudent
 import com.example.sistemaalumnosv2.vo.Resource
 import com.google.firebase.auth.FirebaseAuth
 import dagger.hilt.android.AndroidEntryPoint
@@ -106,7 +106,6 @@ class StudentDataFragment : Fragment() {
         } else if (year.isEmpty()) {
             binding.acYear.error = getString(R.string.helperErrorYear)
         } else {
-
             viewModelStudent.insertNewStudent(dni.toInt(), name, surname, year, auth.uid.toString()).observe(viewLifecycleOwner) { result ->
                 when (result) {
                     is Resource.Loading -> {

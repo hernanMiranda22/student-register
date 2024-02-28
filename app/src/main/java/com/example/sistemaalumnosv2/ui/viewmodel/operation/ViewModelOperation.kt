@@ -1,4 +1,4 @@
-package com.example.sistemaalumnosv2.presentation.viewmodel.operation
+package com.example.sistemaalumnosv2.ui.viewmodel.operation
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.liveData

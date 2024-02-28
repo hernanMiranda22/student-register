@@ -1,4 +1,4 @@
-package com.example.sistemaalumnosv2.presentation.view.adapter
+package com.example.sistemaalumnosv2.ui.view.adapter
 
 import android.content.Context
 import android.view.LayoutInflater

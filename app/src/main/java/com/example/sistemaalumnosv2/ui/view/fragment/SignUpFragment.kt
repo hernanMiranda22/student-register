@@ -1,4 +1,4 @@
-package com.example.sistemaalumnosv2.presentation.view.fragment
+package com.example.sistemaalumnosv2.ui.view.fragment
 
 import android.os.Bundle
 import android.util.Log
@@ -11,8 +11,8 @@ import android.widget.Toast
 import androidx.fragment.app.viewModels
 import com.example.sistemaalumnosv2.R
 import com.example.sistemaalumnosv2.databinding.FragmentSignUpBinding
-import com.example.sistemaalumnosv2.presentation.view.activity.LoginActivity
-import com.example.sistemaalumnosv2.presentation.viewmodel.signupviewmodel.ViewModelSignUp
+import com.example.sistemaalumnosv2.ui.view.activity.LoginActivity
+import com.example.sistemaalumnosv2.ui.viewmodel.signupviewmodel.ViewModelSignUp
 import com.example.sistemaalumnosv2.vo.Resource
 import com.google.firebase.auth.FirebaseAuth
 import dagger.hilt.android.AndroidEntryPoint

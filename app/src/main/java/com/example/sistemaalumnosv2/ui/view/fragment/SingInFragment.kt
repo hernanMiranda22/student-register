@@ -1,4 +1,4 @@
-package com.example.sistemaalumnosv2.presentation.view.fragment
+package com.example.sistemaalumnosv2.ui.view.fragment
 
 import android.app.Activity.RESULT_OK
 import android.content.Intent
@@ -15,9 +15,9 @@ import androidx.fragment.app.viewModels
 import com.example.sistemaalumnosv2.R
 import com.example.sistemaalumnosv2.data.model.ProviderType
 import com.example.sistemaalumnosv2.databinding.FragmentSignInBinding
-import com.example.sistemaalumnosv2.presentation.view.activity.LoginActivity
-import com.example.sistemaalumnosv2.presentation.view.activity.MenuActivity
-import com.example.sistemaalumnosv2.presentation.viewmodel.signinviewmodel.ViewModelSignIn
+import com.example.sistemaalumnosv2.ui.view.activity.LoginActivity
+import com.example.sistemaalumnosv2.ui.view.activity.MenuActivity
+import com.example.sistemaalumnosv2.ui.viewmodel.signinviewmodel.ViewModelSignIn
 import com.example.sistemaalumnosv2.vo.Resource
 import com.firebase.ui.auth.AuthUI
 import com.firebase.ui.auth.FirebaseAuthUIActivityResultContract
