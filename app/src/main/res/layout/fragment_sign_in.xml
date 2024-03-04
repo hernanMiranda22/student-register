@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".ui.view.fragment.SingInFragment">
+    tools:context=".login_screen.ui.view.fragment.SingInFragment">
 
     <TextView
         android:id="@+id/tvTittleSignIn"
@@ -68,7 +68,7 @@
     <Button
         android:id="@+id/btnSignIn"
         android:layout_width="0dp"
-        android:layout_height="55dp"
+        android:layout_height="70dp"
         android:text="@string/textUserSingIn"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -80,7 +80,7 @@
     <com.google.android.gms.common.SignInButton
         android:id="@+id/btnSignUpGoogle"
         android:layout_width="0dp"
-        android:layout_height="50dp"
+        android:layout_height="70dp"
         android:textAlignment="center"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -96,7 +96,7 @@
         android:textSize="19sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias=".34"
+        app:layout_constraintHorizontal_bias=".30"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnSignUpGoogle"
         app:layout_constraintVertical_bias="0.1" />

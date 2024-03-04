@@ -10,6 +10,10 @@
 
     <string name="description_icon_add">PersonAddIcon</string>
 
+    <string name="tabItem_signIn">Iniciar Sesion</string>
+    <string name="tabItem_signUp">Crear cuenta</string>
+
+
     <string name="inputTextDni">DNI</string>
     <string name="inputTextName">Nombre</string>
     <string name="inputTextSurname">Apellido</string>

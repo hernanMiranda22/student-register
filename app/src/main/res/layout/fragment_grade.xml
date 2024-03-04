@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:id="@+id/constrainGrade"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".ui.view.fragment.GradeFragment">
+    tools:context=".menu_screen.ui.view.fragment.GradeFragment">
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/tiContainerDniGrade"
