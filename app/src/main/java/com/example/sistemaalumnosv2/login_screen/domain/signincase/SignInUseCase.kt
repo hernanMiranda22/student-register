@@ -7,5 +7,5 @@ import javax.inject.Inject
 
 class SignInUseCase @Inject constructor(private val signInUserRepository: SignInUserRepository) {
      suspend fun signInWithEmail(email: String, password: String): Resource<User> =
-        signInUserRepository .signInWithEmail(email, password)
+        signInUserRepository.signInWithEmail(email, password)
 }

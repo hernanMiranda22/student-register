@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import com.example.sistemaalumnosv2.R
 import com.example.sistemaalumnosv2.login_screen.ui.view.activity.LoginActivity
 import com.example.sistemaalumnosv2.menu_screen.ui.view.activity.MenuActivity
@@ -20,11 +21,15 @@ class LoadingScreenActivity : AppCompatActivity() {
 
     private lateinit var auth: FirebaseAuth
     override fun onCreate(savedInstanceState: Bundle?) {
+
+        val screenSplash = installSplashScreen()
+
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_loading_screen)
 
         auth = Firebase.auth
 
+        screenSplash.setKeepOnScreenCondition{true}
     }
 
     public override fun onStart() {

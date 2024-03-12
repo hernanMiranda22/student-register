@@ -36,4 +36,11 @@
         <item name="itemTextColor">@color/md_theme_light_onPrimary</item>
         <item name="itemIconTint">@color/md_theme_light_onPrimary</item>
     </style>
+    
+    <style name="Theme.App.Starting" parent="Theme.SplashScreen">
+        <item name="windowSplashScreenBackground">@color/seed</item>
+        <item name="windowSplashScreenAnimatedIcon">@drawable/studenticonsplash</item>
+        <item name="windowSplashScreenAnimationDuration">300</item>
+        <item name="postSplashScreenTheme">@style/Base.Theme.SistemaAlumnosV2</item>
+    </style>
 </resources>

@@ -60,10 +60,6 @@ dependencies {
     implementation("androidx.fragment:fragment-ktx:1.6.2")
     implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.6.4")
 
-    // retrofit
-    implementation ("com.squareup.retrofit2:retrofit:2.9.0")
-    // GSON
-    implementation ("com.squareup.retrofit2:converter-gson:2.9.0")
     //ViewModel
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.2")
     implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.6.2")
@@ -79,7 +75,11 @@ dependencies {
 
     implementation("androidx.swiperefreshlayout:swiperefreshlayout:1.1.0")
 
+    //SplashScreen
+    implementation("androidx.core:core-splashscreen:1.0.1")
+
     testImplementation("junit:junit:4.13.2")
+    testImplementation("io.mockk:mockk:1.13.10")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
 }
