@@ -15,6 +15,7 @@ import androidx.fragment.app.viewModels
 import com.example.sistemaalumnosv2.R
 import com.example.sistemaalumnosv2.databinding.FragmentStudenDataBinding
 import com.example.sistemaalumnosv2.login_screen.ui.view.activity.LoginActivity
+import com.example.sistemaalumnosv2.menu_screen.ui.ResourceUIMenu
 import com.example.sistemaalumnosv2.menu_screen.ui.view.activity.MenuActivity
 import com.example.sistemaalumnosv2.menu_screen.ui.viewmodel.studentviewmodel.ViewModelStudent
 import com.example.sistemaalumnosv2.vo.Resource
@@ -31,9 +32,6 @@ class StudentDataFragment : Fragment() {
 
     //Declaracion del ViewModel
     private val viewModelStudent : ViewModelStudent by viewModels()
-//    private val viewModelStudent by lazy { ViewModelProvider(this,
-//        ViewModelStudentFactory(InsertUseCaseImpl(InsertStudentRepoImpl()))
-//    )[ViewModelStudent::class.java] }
 
     private var _year = ""
 
@@ -54,8 +52,6 @@ class StudentDataFragment : Fragment() {
         dropMenu()
 
         getYear()
-
-        //actionTopBar()
 
         binding.acYear.setOnClickListener {
             binding.acYear.error = null
@@ -113,19 +109,20 @@ class StudentDataFragment : Fragment() {
         } else if (year.isEmpty()) {
             binding.acYear.error = getString(R.string.helperErrorYear)
         } else {
-            viewModelStudent.insertNewStudent(dni.toInt(), name, surname, year, auth.uid.toString()).observe(viewLifecycleOwner) { result ->
+            viewModelStudent.insertNewStudent(dni.toInt(), name, surname, year, auth.uid.toString())
+            viewModelStudent.studentModel.observe(viewLifecycleOwner) { result ->
                 when (result) {
-                    is Resource.Loading -> {
+                    is ResourceUIMenu.Loading -> {
                         showProgress()
                     }
 
-                    is Resource.Success -> {
+                    is ResourceUIMenu.Success -> {
                         Toast.makeText(activity as MenuActivity, "Alumno ingresado exitosamente", Toast.LENGTH_SHORT).show()
                         hideProgress()
                         clearText()
                     }
 
-                    is Resource.Failure -> {
+                    is ResourceUIMenu.Failure -> {
                         Log.e("Error","${result.exception}")
                     }
                 }
@@ -168,19 +165,4 @@ class StudentDataFragment : Fragment() {
         nameEditText.filters = arrayOf(filter)
         surnameEditText.filters = arrayOf(filter)
     }
-
-//    private fun actionTopBar(){
-//        binding.topAppBar.setOnMenuItemClickListener { menu ->
-//            when(menu.itemId){
-//                R.id.btnSignOut -> {
-//                    FirebaseAuth.getInstance().signOut()
-//                    val intent = Intent(activity as MenuActivity, LoginActivity::class.java)
-//                    startActivity(intent)
-//                    (activity as MenuActivity).finish()
-//                    true
-//                }
-//                else -> false
-//            }
-//        }
-//    }
 }

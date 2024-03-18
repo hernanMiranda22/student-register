@@ -15,14 +15,6 @@ class OperationAdapter(private var student : MutableList<DataStudent>, context:C
 
     private var onClickListener: OnClickListener? = null
 
-
-    //private var dataList = mutableListOf<DataStudent>() //Los datos que se le pasan al onBindViewHolder para que setee los datos
-
-    //Funcion que setea los datos en el dataList
-//    fun setListData(data:MutableList<DataStudent>){
-//        dataList = data
-//    }
-
     fun setOnClickListener(onClickListener: OnClickListener){
         this.onClickListener = onClickListener
     }
@@ -56,7 +48,6 @@ class OperationAdapter(private var student : MutableList<DataStudent>, context:C
 
     override fun onBindViewHolder(holder: ViewHolder, @SuppressLint("RecyclerView") position: Int) {
         val student = student[position]
-
         holder.bind(student)
     }
 

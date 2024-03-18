@@ -1,5 +1,6 @@
 package com.example.sistemaalumnosv2.menu_screen.data.network.insertstudent
 
+import com.example.sistemaalumnosv2.menu_screen.data.ResourceMenu
 import com.example.sistemaalumnosv2.menu_screen.data.model.DataStudent
 import com.example.sistemaalumnosv2.vo.Resource
 import com.google.firebase.firestore.FirebaseFirestore
@@ -9,7 +10,7 @@ import javax.inject.Inject
 class InsertStudentRepository @Inject constructor(){
 
     //Logica para ingresar los datos del alumno(StudentDataFragment)
-   suspend fun insertStudent(dni:Int, name:String, surname:String, year:String, idUser: String): Resource<DataStudent> {
+   suspend fun insertStudent(dni:Int, name:String, surname:String, year:String, idUser: String): ResourceMenu<DataStudent> {
 
         val studentMap = hashMapOf(
             "DNI" to dni,
@@ -26,7 +27,7 @@ class InsertStudentRepository @Inject constructor(){
             .document(idUser).collection("Student").document(dni.toString())
             .set(studentMap).await()
 
-        return Resource.Success(DataStudent(dni = dni, name = name, surname = surname, year = year, firstTerm = 0, secondTerm = 0, thirdTerm = 0))
+        return ResourceMenu.Success(DataStudent(dni = dni, name = name, surname = surname, year = year, firstTerm = 0, secondTerm = 0, thirdTerm = 0))
 
     }
 }

@@ -17,6 +17,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.sistemaalumnosv2.R
 import com.example.sistemaalumnosv2.menu_screen.data.model.GradeStudent
 import com.example.sistemaalumnosv2.databinding.FragmentGradeBinding
+import com.example.sistemaalumnosv2.menu_screen.data.model.TermData
+import com.example.sistemaalumnosv2.menu_screen.ui.ResourceUIMenu
 import com.example.sistemaalumnosv2.menu_screen.ui.view.activity.MenuActivity
 import com.example.sistemaalumnosv2.menu_screen.ui.view.adapter.GradeAdapter
 import com.example.sistemaalumnosv2.menu_screen.ui.viewmodel.grade.ViewModelGrade
@@ -121,17 +123,17 @@ class GradeFragment : Fragment() {
             viewModelGrade.insertGrade(dni.toInt(), firstTerm.toInt(), secondTerm.toInt(),  thirdTerm.toInt(), auth.uid.toString())
             viewModelGrade.termDataModel.observe(viewLifecycleOwner){result ->
                 when(result){
-                    is Resource.Loading ->{
+                    is ResourceUIMenu.Loading ->{
                         binding.cpGrade.visibility = View.VISIBLE
                     }
-                    is Resource.Success -> {
+                    is ResourceUIMenu.Success -> {
                         binding.cpGrade.visibility = View.GONE
                         Toast.makeText(activity as MenuActivity, "Trimestres ingresados!", Toast.LENGTH_SHORT).show()
                         initRecyclerView()
                         clearField()
                     }
-                    is Resource.Failure ->{
-                        Log.e("ERRO INSERT", "${result.exception}")
+                    is ResourceUIMenu.Failure ->{
+                        Log.e("ERROR INSERT", "${result.exception}")
                     }
                 }
             }

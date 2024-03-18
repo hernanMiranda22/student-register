@@ -3,15 +3,15 @@ package com.example.sistemaalumnosv2.menu_screen.ui.viewmodel.grade
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.liveData
 import androidx.lifecycle.viewModelScope
+import com.example.sistemaalumnosv2.menu_screen.data.ResourceMenu
 import com.example.sistemaalumnosv2.menu_screen.data.model.GradeStudent
 import com.example.sistemaalumnosv2.menu_screen.data.model.TermData
 import com.example.sistemaalumnosv2.menu_screen.domain.insertgradecase.GradeStudentUseCase
 import com.example.sistemaalumnosv2.menu_screen.domain.searchgradecase.SearchGradeUseCase
+import com.example.sistemaalumnosv2.menu_screen.ui.ResourceUIMenu
 import com.example.sistemaalumnosv2.vo.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -22,8 +22,8 @@ class ViewModelGrade @Inject constructor(private val searchGradeUseCase: SearchG
     val gradeStudentModel : LiveData<Resource<MutableList<GradeStudent>>>
         get() = _gradeStudentModel
 
-    private val _termDataModel = MutableLiveData<Resource<TermData>>()
-    val termDataModel : LiveData<Resource<TermData>>
+    private val _termDataModel = MutableLiveData<ResourceUIMenu<TermData>>()
+    val termDataModel : LiveData<ResourceUIMenu<TermData>>
         get() = _termDataModel
 
     private val _isLoading = MutableLiveData<Boolean>()
@@ -52,46 +52,24 @@ class ViewModelGrade @Inject constructor(private val searchGradeUseCase: SearchG
 
     fun insertGrade(dni:Int, firstTerm:Int,secondTerm:Int,thirdTerm:Int, uid : String){
         viewModelScope.launch {
-            when(val result = gradeStudentUseCase.insertGrade(dni, firstTerm, secondTerm, thirdTerm, uid)){
-                is Resource.Loading ->{
-                    _isLoading.postValue(true)
-                }
-                is Resource.Success -> {
-                    _termDataModel.postValue(result)
-                }
-                is Resource.Failure -> {
-                    _exception.postValue(result.exception)
-                }
+            try {
+                _termDataModel.postValue(ResourceUIMenu.Loading())
+
+                val result = gradeStudentUseCase.insertGrade(dni, firstTerm, secondTerm, thirdTerm, uid)
+                _termDataModel.postValue(ResourceUIMenu.Success(result) as ResourceUIMenu<TermData>)
+            }catch (e: Exception){
+                _termDataModel.postValue(ResourceUIMenu.Failure(e))
             }
+//            _isLoading.postValue(true)
+//            when(val result = gradeStudentUseCase.insertGrade(dni, firstTerm, secondTerm, thirdTerm, uid)){
+//                is ResourceMenu.Success -> {
+//                    _termDataModel.postValue(result)
+//                }
+//                is ResourceMenu.Failure -> {
+//                    _exception.postValue(result.exception)
+//                }
+//            }
+//            _isLoading.postValue(false)
         }
     }
-
-
-//    private val dispatchersIO = Dispatchers.IO
-//    fun getDataAndTerm(dni:Int, uid: String) = liveData(dispatchersIO) {
-//        emit(Resource.Loading())
-//
-//        try {
-//
-//            val studentData = searchGradeUseCase.getGradeStudent(dni,uid)
-//            emit(studentData)
-//
-//        }catch (e:Exception){
-//            emit(Resource.Failure(e))
-//        }
-//    }
-//
-//    fun insertGrade(dni:Int, firstTerm:Int,secondTerm:Int,thirdTerm:Int, uid : String) = liveData(dispatchersIO) {
-//
-//        emit(Resource.Loading())
-//
-//        try {
-//
-//            val gradeStudent = gradeStudentUseCase.insertGrade(dni, firstTerm, secondTerm, thirdTerm, uid)
-//            emit(gradeStudent)
-//
-//        }catch (e:Exception){
-//            emit(Resource.Failure(e))
-//        }
-//    }
 }

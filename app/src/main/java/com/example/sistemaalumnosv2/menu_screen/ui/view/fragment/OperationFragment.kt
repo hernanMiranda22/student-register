@@ -9,11 +9,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
+import androidx.core.view.isVisible
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.sistemaalumnosv2.menu_screen.data.model.DataStudent
 import com.example.sistemaalumnosv2.databinding.FragmentOperationBinding
+import com.example.sistemaalumnosv2.menu_screen.data.ResourceMenu
+import com.example.sistemaalumnosv2.menu_screen.ui.ResourceUIMenu
 import com.example.sistemaalumnosv2.menu_screen.ui.view.activity.MenuActivity
 import com.example.sistemaalumnosv2.menu_screen.ui.view.adapter.OperationAdapter
 import com.example.sistemaalumnosv2.menu_screen.ui.viewmodel.operation.ViewModelOperation
@@ -29,9 +32,6 @@ class OperationFragment : Fragment() {
     private val binding get() = _binding!!
 
     private val viewModelOperation : ViewModelOperation by viewModels()
-//    private val viewModelOperation by lazy { ViewModelProvider(this,
-//        ViewModelOperationFactory(SearchStudentUseCaseImpl(SearchStudentRepoImpl()))
-//    )[ViewModelOperation::class.java] }
 
     private lateinit var adapter : OperationAdapter
 
@@ -67,18 +67,21 @@ class OperationFragment : Fragment() {
     @SuppressLint("NotifyDataSetChanged")
     private fun loadStudent(){
         val auth = FirebaseAuth.getInstance()
-        viewModelOperation.searchDataStudent(auth.uid.toString()).observe(viewLifecycleOwner) {list ->
+        viewModelOperation.searchDataStudent(auth.uid.toString())
+
+        viewModelOperation.isLoading.observe(viewLifecycleOwner){
+            binding.piListStudent.isVisible = it
+        }
+
+        viewModelOperation.studentDataModel.observe(viewLifecycleOwner) {list ->
             when(list){
-                is Resource.Loading -> {
-                    binding.piListStudent.visibility = View.VISIBLE
-                }
-                is Resource.Success -> {
+                is ResourceMenu.Success -> {
                     binding.piListStudent.visibility = View.GONE
                     itemAdapter.clear()
-                    itemAdapter.addAll(list.data)
+                    itemAdapter.addAll(list.data as Collection<DataStudent>)
                     adapter.notifyDataSetChanged()
                 }
-                is Resource.Failure -> {
+                is ResourceMenu.Failure -> {
                     Log.e("ERROR", "${list.exception}")
                 }
             }
@@ -88,16 +91,16 @@ class OperationFragment : Fragment() {
     @SuppressLint("NotifyDataSetChanged")
     private fun reLoadStudent(){
         val auth = FirebaseAuth.getInstance()
-        viewModelOperation.searchDataStudent(auth.uid.toString()).observe(viewLifecycleOwner) {list ->
+        viewModelOperation.searchDataStudent(auth.uid.toString())
+        viewModelOperation.studentDataModel.observe(viewLifecycleOwner) {list ->
             when(list){
-                is Resource.Loading -> {
-                }
-                is Resource.Success -> {
+                is ResourceMenu.Success -> {
+                    binding.piListStudent.visibility = View.GONE
                     itemAdapter.clear()
                     itemAdapter.addAll(list.data)
                     adapter.notifyDataSetChanged()
                 }
-                is Resource.Failure -> {
+                is ResourceMenu.Failure -> {
                     Log.e("ERROR", "${list.exception}")
                 }
             }
