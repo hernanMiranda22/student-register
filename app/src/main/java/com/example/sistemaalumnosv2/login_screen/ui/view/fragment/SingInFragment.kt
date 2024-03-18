@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.fragment.app.commit
 import androidx.fragment.app.replace
 import androidx.fragment.app.viewModels
@@ -59,20 +60,31 @@ class SingInFragment : Fragment() {
         }else if (password.isEmpty()){
             binding.etPasswordSignIn.error = getString(R.string.helperErrorPassword)
         }else{
-            viewModelSignIn.signInWithEmail(email, password).observe(viewLifecycleOwner){result ->
-                when(result){
-                    is Resource.Loading ->{
-                        binding.pbSignIn.visibility = View.VISIBLE
-                    }
-                    is Resource.Success ->{
-                        binding.pbSignIn.visibility = View.GONE
-                        navigateToMainMenu(email, ProviderType.EMAIL)
-                    }
-                    is Resource.Failure ->{
-                        Log.e("Error SingIn","${result.exception}")
-                    }
-                }
+            viewModelSignIn.signInWithEmail(email, password)
+            viewModelSignIn.userModel.observe(viewLifecycleOwner){result ->
+                navigateToMainMenu(email, ProviderType.EMAIL)
             }
+            viewModelSignIn.isLoading.observe(viewLifecycleOwner){
+                binding.pbSignIn.isVisible = it
+            }
+
+            viewModelSignIn.userException.observe(viewLifecycleOwner){result ->
+                Log.e("Error SingIn","$result")
+            }
+//            viewModelSignIn.signInWithEmail(email, password).observe(viewLifecycleOwner){result ->
+//                when(result){
+//                    is Resource.Loading ->{
+//                        binding.pbSignIn.visibility = View.VISIBLE
+//                    }
+//                    is Resource.Success ->{
+//                        binding.pbSignIn.visibility = View.GONE
+//                        navigateToMainMenu(email, ProviderType.EMAIL)
+//                    }
+//                    is Resource.Failure ->{
+//                        Log.e("Error SingIn","${result.exception}")
+//                    }
+//                }
+//            }
         }
     }
 

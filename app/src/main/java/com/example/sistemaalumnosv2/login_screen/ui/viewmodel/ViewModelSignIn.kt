@@ -1,41 +1,51 @@
 package com.example.sistemaalumnosv2.login_screen.ui.viewmodel
 
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.liveData
+import androidx.lifecycle.viewModelScope
+import com.example.sistemaalumnosv2.login_screen.data.model.User
 import com.example.sistemaalumnosv2.login_screen.domain.signincase.SignInUseCase
 import com.example.sistemaalumnosv2.vo.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class ViewModelSignIn @Inject constructor(private val signInUseCase: SignInUseCase):ViewModel() {
 
-    private val dispatchers = Dispatchers.IO
-    fun signInWithEmail(email: String, password : String) = liveData(dispatchers){
-        emit(Resource.Loading())
 
-        try {
+    private val _userModel = MutableLiveData<Resource<User>>()
+    val userModel : LiveData<Resource<User>>
+        get() = _userModel
 
-            val signInUser = signInUseCase.signInWithEmail(email, password)
-            emit(Resource.Success(signInUser))
+    private val _isLoading = MutableLiveData<Boolean>()
+    val isLoading : LiveData<Boolean>
+        get() = _isLoading
 
-        }catch (e : Exception){
-            emit(Resource.Failure(e))
+    private val _userException = MutableLiveData<Exception>()
+    val userException :LiveData<Exception>
+        get() = _userException
+
+
+    fun signInWithEmail(email: String, password : String){
+        viewModelScope.launch {
+
+            when(val result = signInUseCase.signInWithEmail(email, password)){
+                is Resource.Loading -> {
+                    _isLoading.postValue(true)
+                }
+                is Resource.Success -> {
+                    _userModel.postValue(result)
+                    _isLoading.postValue(false)
+                }
+                is Resource.Failure -> {
+                    _userException.postValue(result.exception)
+                    _isLoading.postValue(false)
+                }
+            }
         }
     }
 
-
-//    fun signInUserWithGoogle(credential: AuthCredential) = liveData(dispatchers) {
-//        emit(Resource.Loading())
-//
-//        try {
-//
-//            val userSignIn = signInGoogleUseCase.signInWithGoogle(credential)
-//            emit(Resource.Success(userSignIn))
-//
-//        }catch (e:Exception){
-//            emit(Resource.Failure(e))
-//        }
-//    }
 }

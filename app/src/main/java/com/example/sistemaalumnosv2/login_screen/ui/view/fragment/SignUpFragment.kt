@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import com.example.sistemaalumnosv2.R
 import com.example.sistemaalumnosv2.databinding.FragmentSignUpBinding
@@ -58,22 +59,36 @@ class SignUpFragment : Fragment() {
         }else if (passwordConfirm.isEmpty() || passwordConfirm != password){
             Toast.makeText(activity as LoginActivity, "Error al confirmar la contraseña", Toast.LENGTH_SHORT).show()
         }else{
-            viewModelSignUp.signUpNewUser(email, password).observe(viewLifecycleOwner){result ->
-                when(result){
-                    is Resource.Loading -> {
-                        binding.cpSignUp.visibility = View.VISIBLE
-                    }
-                    is Resource.Success -> {
-                        binding.cpSignUp.visibility = View.GONE
-                        Toast.makeText(activity as LoginActivity, "Usuario creado exitosamente", Toast.LENGTH_SHORT).show()
-                        clearText()
-                    }
-                    is Resource.Failure -> {
-                        authValidate(result.exception.message)
-                        Log.e("Error SignUp","${result.exception}")
-                    }
-                }
+            viewModelSignUp.signUpNewUser(email, password)
+
+            viewModelSignUp.isLoading.observe(viewLifecycleOwner){
+                binding.cpSignUp.isVisible = it
             }
+
+            viewModelSignUp.userModel.observe(viewLifecycleOwner){
+                Toast.makeText(activity as LoginActivity, "Usuario creado exitosamente", Toast.LENGTH_SHORT).show()
+                clearText()
+            }
+
+            viewModelSignUp.userException.observe(viewLifecycleOwner){
+                Log.e("Error SignUp","$it")
+            }
+//            viewModelSignUp.signUpNewUser(email, password).observe(viewLifecycleOwner){result ->
+//                when(result){
+//                    is Resource.Loading -> {
+//                        binding.cpSignUp.visibility = View.VISIBLE
+//                    }
+//                    is Resource.Success -> {
+//                        binding.cpSignUp.visibility = View.GONE
+//                        Toast.makeText(activity as LoginActivity, "Usuario creado exitosamente", Toast.LENGTH_SHORT).show()
+//                        clearText()
+//                    }
+//                    is Resource.Failure -> {
+//                        authValidate(result.exception.message)
+//                        Log.e("Error SignUp","${result.exception}")
+//                    }
+//                }
+//            }
         }
     }
 

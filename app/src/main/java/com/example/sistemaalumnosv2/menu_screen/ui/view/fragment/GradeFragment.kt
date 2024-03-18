@@ -76,8 +76,10 @@ class GradeFragment : Fragment() {
         if (dni.isEmpty()){
             binding.etDniGrade.error = getString(R.string.helperErrorDni)
         }else{
-            viewModelGrade.getDataAndTerm(dni.toInt(), auth.uid.toString()).observe(viewLifecycleOwner){ result ->
-                when(result){
+            viewModelGrade.getDataAndTerm(dni.toInt(), auth.uid.toString())
+            viewModelGrade.gradeStudentModel.observe(viewLifecycleOwner) { result ->
+
+                when (result) {
                     is Resource.Loading -> {
                         binding.rvStudentData.visibility = View.GONE
                         showProgressBar()
@@ -89,7 +91,6 @@ class GradeFragment : Fragment() {
                         contentRecycler.clear()
                         gradeAdapter.setData(result.data)
                         gradeAdapter.notifyDataSetChanged()
-                        binding.rvStudentData.visibility = View.VISIBLE
                         for (term in result.data){
                             editTextFirstTerm.setText(term.firstTerm.toString())
                             editTextSecondTerm.setText(term.secondTerm.toString())
@@ -100,7 +101,6 @@ class GradeFragment : Fragment() {
                         Log.e("ERROR DATA", "${result.exception}")
                     }
                 }
-
             }
         }
     }
@@ -118,7 +118,8 @@ class GradeFragment : Fragment() {
         }else if (thirdTerm.isEmpty() || thirdTerm.toInt() == 0){
             binding.etThirdTerm.error = getString(R.string.helperErrorGrade)
         }else{
-            viewModelGrade.insertGrade(dni.toInt(), firstTerm.toInt(), secondTerm.toInt(),  thirdTerm.toInt(), auth.uid.toString()).observe(viewLifecycleOwner){result ->
+            viewModelGrade.insertGrade(dni.toInt(), firstTerm.toInt(), secondTerm.toInt(),  thirdTerm.toInt(), auth.uid.toString())
+            viewModelGrade.termDataModel.observe(viewLifecycleOwner){result ->
                 when(result){
                     is Resource.Loading ->{
                         binding.cpGrade.visibility = View.VISIBLE
