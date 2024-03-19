@@ -30,33 +30,17 @@ class ViewModelSignUp @Inject constructor(private val signUpUserUseCase: SignUpU
 
     fun signUpNewUser(email : String, password : String){
         viewModelScope.launch {
-
+            _isLoading.postValue(true)
             when(val result = signUpUserUseCase.signUpEmailAndPassword(email, password)){
-                is Resource.Loading -> {
-                    _isLoading.postValue(true)
-                }
                 is Resource.Success -> {
                     _userModel.postValue(result)
-                    _isLoading.postValue(false)
+
                 }
                 is Resource.Failure -> {
                     _userException.postValue(result.exception)
                 }
             }
+            _isLoading.postValue(false)
         }
     }
-//    private val dispatchers = Dispatchers.IO
-
-//    fun signUpNewUser(email : String, password : String) = liveData(dispatchers) {
-//        emit(Resource.Loading())
-//
-//        try {
-//
-//            val signUp = signUpUserUseCase.signUpEmailAndPassword(email, password)
-//            emit(Resource.Success(signUp))
-//
-//        }catch (e: Exception){
-//            emit(Resource.Failure(e))
-//        }
-//    }
 }

@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.commit
 import androidx.fragment.app.replace
@@ -61,30 +62,25 @@ class SingInFragment : Fragment() {
             binding.etPasswordSignIn.error = getString(R.string.helperErrorPassword)
         }else{
             viewModelSignIn.signInWithEmail(email, password)
-            viewModelSignIn.userModel.observe(viewLifecycleOwner){result ->
-                navigateToMainMenu(email, ProviderType.EMAIL)
-            }
+
             viewModelSignIn.isLoading.observe(viewLifecycleOwner){
                 binding.pbSignIn.isVisible = it
             }
 
-            viewModelSignIn.userException.observe(viewLifecycleOwner){result ->
-                Log.e("Error SingIn","$result")
+            viewModelSignIn.userModel.observe(viewLifecycleOwner){result ->
+                when(result){
+                    is Resource.Success ->{
+                        navigateToMainMenu(email, ProviderType.EMAIL)
+                    }
+                    is Resource.Failure ->{
+                        Toast.makeText(activity as LoginActivity, "Error al iniciar sesion", Toast.LENGTH_SHORT).show()
+                    }
+                }
             }
-//            viewModelSignIn.signInWithEmail(email, password).observe(viewLifecycleOwner){result ->
-//                when(result){
-//                    is Resource.Loading ->{
-//                        binding.pbSignIn.visibility = View.VISIBLE
-//                    }
-//                    is Resource.Success ->{
-//                        binding.pbSignIn.visibility = View.GONE
-//                        navigateToMainMenu(email, ProviderType.EMAIL)
-//                    }
-//                    is Resource.Failure ->{
-//                        Log.e("Error SingIn","${result.exception}")
-//                    }
-//                }
-//            }
+
+            viewModelSignIn.userException.observe(viewLifecycleOwner){
+                Log.e("Error SingIn","$it")
+            }
         }
     }
 
@@ -117,13 +113,6 @@ class SingInFragment : Fragment() {
             startActivity(intent)
         }
     }
-
-//    private fun navigateToSignUpScreen() {
-//        (activity as LoginActivity).supportFragmentManager.commit {
-//            setReorderingAllowed(true)
-//            replace<SignUpFragment>(R.id.fcvLogin)
-//        }
-//    }
 
     private fun navigateToMainMenu(email: String, provider : ProviderType){
         val intent =  Intent(activity as LoginActivity, MenuActivity::class.java).apply {

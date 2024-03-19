@@ -41,19 +41,6 @@ class SignInUseCaseTest{
         assertEquals(user, (response as Resource.Success).data)
     }
 
-    @Test
-    fun `use case sign in returns loading`() = runBlocking {
-        //Given
-        val email = "jorge@gmail.com"
-        val password = "123456"
-        coEvery { signInUserRepository.signInWithEmail(email, password) } returns Resource.Loading()
-
-        //When
-        val response = signInUseCase.signInWithEmail(email, password)
-
-        //Then
-        assertTrue(response is Resource.Loading)
-    }
 
     @Test
     fun `use case sign in returns failure`() = runBlocking {

@@ -55,17 +55,6 @@ class ViewModelSignInTest{
         assert(viewModelSignIn.userModel.value == Resource.Success(user))
     }
 
-    @Test
-    fun `When the user is trying to access their account, the function return loading`() = runTest {
-        val email = "exampleEmail@gmail.com"
-        val password = "123456"
-
-        coEvery { signInUseCase.signInWithEmail(email, password) } returns Resource.Loading()
-
-        viewModelSignIn.signInWithEmail(email, password)
-
-        assert(viewModelSignIn.isLoading.value == true)
-    }
 
     @Test
     fun `When the user is trying to access their account, the function return failure`() = runTest {

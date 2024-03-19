@@ -10,12 +10,12 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
 import android.widget.Toast
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.example.sistemaalumnosv2.R
 import com.example.sistemaalumnosv2.databinding.FragmentStudenDataBinding
 import com.example.sistemaalumnosv2.login_screen.ui.view.activity.LoginActivity
-import com.example.sistemaalumnosv2.menu_screen.ui.ResourceUIMenu
 import com.example.sistemaalumnosv2.menu_screen.ui.view.activity.MenuActivity
 import com.example.sistemaalumnosv2.menu_screen.ui.viewmodel.studentviewmodel.ViewModelStudent
 import com.example.sistemaalumnosv2.vo.Resource
@@ -110,33 +110,28 @@ class StudentDataFragment : Fragment() {
             binding.acYear.error = getString(R.string.helperErrorYear)
         } else {
             viewModelStudent.insertNewStudent(dni.toInt(), name, surname, year, auth.uid.toString())
+
+            viewModelStudent.isLoading.observe(viewLifecycleOwner){
+                binding.piInsert.isVisible = it
+            }
+
             viewModelStudent.studentModel.observe(viewLifecycleOwner) { result ->
                 when (result) {
-                    is ResourceUIMenu.Loading -> {
-                        showProgress()
-                    }
-
-                    is ResourceUIMenu.Success -> {
+                    is Resource.Success -> {
                         Toast.makeText(activity as MenuActivity, "Alumno ingresado exitosamente", Toast.LENGTH_SHORT).show()
-                        hideProgress()
                         clearText()
                     }
 
-                    is ResourceUIMenu.Failure -> {
-                        Log.e("Error","${result.exception}")
+                    is Resource.Failure -> {
+                        Toast.makeText(activity as MenuActivity, "Error al ingresar al Alumno", Toast.LENGTH_SHORT).show()
                     }
+                }
+
+                viewModelStudent.userException.observe(viewLifecycleOwner){
+                    Log.e("Error Student","$it")
                 }
             }
         }
-    }
-
-
-    private fun showProgress(){
-        binding.piInsert.visibility = View.VISIBLE
-    }
-
-    private fun hideProgress(){
-        binding.piInsert.visibility = View.GONE
     }
 
     private fun clearText(){

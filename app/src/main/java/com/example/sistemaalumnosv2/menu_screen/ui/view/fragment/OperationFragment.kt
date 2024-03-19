@@ -9,14 +9,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
+import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.sistemaalumnosv2.menu_screen.data.model.DataStudent
 import com.example.sistemaalumnosv2.databinding.FragmentOperationBinding
-import com.example.sistemaalumnosv2.menu_screen.data.ResourceMenu
-import com.example.sistemaalumnosv2.menu_screen.ui.ResourceUIMenu
 import com.example.sistemaalumnosv2.menu_screen.ui.view.activity.MenuActivity
 import com.example.sistemaalumnosv2.menu_screen.ui.view.adapter.OperationAdapter
 import com.example.sistemaalumnosv2.menu_screen.ui.viewmodel.operation.ViewModelOperation
@@ -75,17 +74,21 @@ class OperationFragment : Fragment() {
 
         viewModelOperation.studentDataModel.observe(viewLifecycleOwner) {list ->
             when(list){
-                is ResourceMenu.Success -> {
-                    binding.piListStudent.visibility = View.GONE
+                is Resource.Success -> {
                     itemAdapter.clear()
-                    itemAdapter.addAll(list.data as Collection<DataStudent>)
+                    itemAdapter.addAll(list.data)
                     adapter.notifyDataSetChanged()
                 }
-                is ResourceMenu.Failure -> {
-                    Log.e("ERROR", "${list.exception}")
+                is Resource.Failure -> {
+                    Toast.makeText(activity as MenuActivity, "Error al cargar", Toast.LENGTH_SHORT).show()
                 }
             }
         }
+
+        viewModelOperation.userException.observe(viewLifecycleOwner){result ->
+            Log.e("ERROR LOAD", "$result")
+        }
+
     }
 
     @SuppressLint("NotifyDataSetChanged")
@@ -94,16 +97,19 @@ class OperationFragment : Fragment() {
         viewModelOperation.searchDataStudent(auth.uid.toString())
         viewModelOperation.studentDataModel.observe(viewLifecycleOwner) {list ->
             when(list){
-                is ResourceMenu.Success -> {
-                    binding.piListStudent.visibility = View.GONE
+                is Resource.Success -> {
                     itemAdapter.clear()
                     itemAdapter.addAll(list.data)
                     adapter.notifyDataSetChanged()
                 }
-                is ResourceMenu.Failure -> {
-                    Log.e("ERROR", "${list.exception}")
+                is Resource.Failure -> {
+                    Toast.makeText(activity as MenuActivity, "Error al refrescar", Toast.LENGTH_SHORT).show()
                 }
             }
+        }
+
+        viewModelOperation.userException.observe(viewLifecycleOwner){result ->
+            Log.e("ERROR RELOAD", "$result")
         }
     }
 

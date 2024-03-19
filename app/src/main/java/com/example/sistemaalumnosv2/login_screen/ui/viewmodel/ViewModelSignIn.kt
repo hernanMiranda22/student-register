@@ -32,19 +32,16 @@ class ViewModelSignIn @Inject constructor(private val signInUseCase: SignInUseCa
     fun signInWithEmail(email: String, password : String){
         viewModelScope.launch {
 
+            _isLoading.postValue(true)
             when(val result = signInUseCase.signInWithEmail(email, password)){
-                is Resource.Loading -> {
-                    _isLoading.postValue(true)
-                }
                 is Resource.Success -> {
                     _userModel.postValue(result)
-                    _isLoading.postValue(false)
                 }
                 is Resource.Failure -> {
                     _userException.postValue(result.exception)
-                    _isLoading.postValue(false)
                 }
             }
+            _isLoading.postValue(false)
         }
     }
 

@@ -1,6 +1,5 @@
 package com.example.sistemaalumnosv2.menu_screen.domain.insertstudentcase
 
-import com.example.sistemaalumnosv2.menu_screen.data.ResourceMenu
 import com.example.sistemaalumnosv2.menu_screen.data.model.DataStudent
 import com.example.sistemaalumnosv2.menu_screen.data.network.insertstudent.InsertStudentRepository
 import com.example.sistemaalumnosv2.vo.Resource
@@ -39,23 +38,23 @@ class InsertUseCaseTest{
     fun `insert student use case return success`() = runBlocking {
 
         val dataStudent = DataStudent(dni, name, surname, year, firstTerm, secondTerm, thirdTerm)
-        coEvery { insertStudentRepository.insertStudent(dni, name, surname, year, idUser) } returns ResourceMenu.Success(dataStudent)
+        coEvery { insertStudentRepository.insertStudent(dni, name, surname, year, idUser) } returns Resource.Success(dataStudent)
 
         val response = insertUseCase.insertStudent(dni, name, surname, year, idUser)
 
-        assertTrue(response is ResourceMenu.Success)
-        assertEquals(dataStudent, (response as ResourceMenu.Success).data)
+        assertTrue(response is Resource.Success)
+        assertEquals(dataStudent, (response as Resource.Success).data)
 
     }
 
     @Test
     fun `insert student use case return failure`() = runBlocking {
 
-        coEvery { insertStudentRepository.insertStudent(dni, name, surname, year, idUser) } returns ResourceMenu.Failure(Exception())
+        coEvery { insertStudentRepository.insertStudent(dni, name, surname, year, idUser) } returns Resource.Failure(Exception())
 
         val response = insertUseCase.insertStudent(dni, name, surname, year, idUser)
 
-        assertTrue(response is ResourceMenu.Failure)
+        assertTrue(response is Resource.Failure)
 
     }
 }

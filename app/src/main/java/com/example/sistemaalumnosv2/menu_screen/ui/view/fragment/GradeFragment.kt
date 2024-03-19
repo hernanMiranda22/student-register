@@ -12,13 +12,12 @@ import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintSet
+import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.sistemaalumnosv2.R
 import com.example.sistemaalumnosv2.menu_screen.data.model.GradeStudent
 import com.example.sistemaalumnosv2.databinding.FragmentGradeBinding
-import com.example.sistemaalumnosv2.menu_screen.data.model.TermData
-import com.example.sistemaalumnosv2.menu_screen.ui.ResourceUIMenu
 import com.example.sistemaalumnosv2.menu_screen.ui.view.activity.MenuActivity
 import com.example.sistemaalumnosv2.menu_screen.ui.view.adapter.GradeAdapter
 import com.example.sistemaalumnosv2.menu_screen.ui.viewmodel.grade.ViewModelGrade
@@ -79,16 +78,18 @@ class GradeFragment : Fragment() {
             binding.etDniGrade.error = getString(R.string.helperErrorDni)
         }else{
             viewModelGrade.getDataAndTerm(dni.toInt(), auth.uid.toString())
+
+            viewModelGrade.isLoading.observe(viewLifecycleOwner){
+                binding.rvStudentData.visibility = View.GONE
+                binding.piTerm.isVisible = it
+                binding.rvStudentData.visibility = View.VISIBLE
+            }
+
             viewModelGrade.gradeStudentModel.observe(viewLifecycleOwner) { result ->
 
                 when (result) {
-                    is Resource.Loading -> {
-                        binding.rvStudentData.visibility = View.GONE
-                        showProgressBar()
-                        setBias(0.15f)
-                    }
                     is Resource.Success -> {
-                        hideProgressBar()
+//                        hideProgressBar()
                         setBias(0.05f)
                         contentRecycler.clear()
                         gradeAdapter.setData(result.data)
@@ -100,9 +101,13 @@ class GradeFragment : Fragment() {
                         }
                     }
                     is Resource.Failure -> {
-                        Log.e("ERROR DATA", "${result.exception}")
+                        Toast.makeText(activity as MenuActivity, "No es posible encontrar los datos del alumno", Toast.LENGTH_SHORT).show()
                     }
                 }
+            }
+
+            viewModelGrade.userException.observe(viewLifecycleOwner){
+                Log.e("ERROR DATA", "$it")
             }
         }
     }
@@ -121,21 +126,27 @@ class GradeFragment : Fragment() {
             binding.etThirdTerm.error = getString(R.string.helperErrorGrade)
         }else{
             viewModelGrade.insertGrade(dni.toInt(), firstTerm.toInt(), secondTerm.toInt(),  thirdTerm.toInt(), auth.uid.toString())
+
+            viewModelGrade.isLoading.observe(viewLifecycleOwner){
+                binding.cpGrade.isVisible = it
+            }
+
             viewModelGrade.termDataModel.observe(viewLifecycleOwner){result ->
                 when(result){
-                    is ResourceUIMenu.Loading ->{
-                        binding.cpGrade.visibility = View.VISIBLE
-                    }
-                    is ResourceUIMenu.Success -> {
+                    is Resource.Success -> {
                         binding.cpGrade.visibility = View.GONE
                         Toast.makeText(activity as MenuActivity, "Trimestres ingresados!", Toast.LENGTH_SHORT).show()
                         initRecyclerView()
                         clearField()
                     }
-                    is ResourceUIMenu.Failure ->{
-                        Log.e("ERROR INSERT", "${result.exception}")
+                    is Resource.Failure ->{
+                        Toast.makeText(activity as MenuActivity, "No es posible ingresar los trimestres", Toast.LENGTH_SHORT).show()
                     }
                 }
+            }
+
+            viewModelGrade.userException.observe(viewLifecycleOwner){
+                Log.e("ERROR INSERT", "$it")
             }
         }
 

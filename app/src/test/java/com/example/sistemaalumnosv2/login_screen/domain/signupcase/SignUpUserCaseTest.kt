@@ -42,20 +42,6 @@ class SignUpUserCaseTest{
     }
 
     @Test
-    fun `signup use case return loading`() = runBlocking {
-        //Given
-        val email = "jorge123@gmail.com"
-        val password = "123456"
-        coEvery { signUpUserRepository.signUpEmailAndPassword(email, password) } returns Resource.Loading()
-
-        //When
-        val response = signUpUserCase.signUpEmailAndPassword(email, password)
-
-        //Then
-        assertTrue(response is Resource.Loading)
-    }
-
-    @Test
     fun `signup use case return failure`() = runBlocking {
         //Given
         val email = "jorge123@gmail.com"

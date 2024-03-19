@@ -1,6 +1,5 @@
 package com.example.sistemaalumnosv2.menu_screen.data.network.searchstudent
 
-import com.example.sistemaalumnosv2.menu_screen.data.ResourceMenu
 import com.example.sistemaalumnosv2.menu_screen.data.model.DataStudent
 import com.example.sistemaalumnosv2.vo.Resource
 import com.google.firebase.firestore.FirebaseFirestore
@@ -10,7 +9,7 @@ import javax.inject.Inject
 class SearchStudentRepository @Inject constructor() {
 
     //Logica para obtener los datos especificados del alumno (OperationFragment)
-    suspend fun searchStudent(uid: String): ResourceMenu<MutableList<DataStudent>> {
+    suspend fun searchStudent(uid: String): Resource<MutableList<DataStudent>> {
 
         val listStudent = mutableListOf<DataStudent>()
 
@@ -39,6 +38,6 @@ class SearchStudentRepository @Inject constructor() {
 
         }
 
-        return ResourceMenu.Success(listStudent)
+        return Resource.Success(listStudent)
     }
 }

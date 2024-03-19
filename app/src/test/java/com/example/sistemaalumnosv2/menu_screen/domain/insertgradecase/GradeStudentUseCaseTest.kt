@@ -1,6 +1,5 @@
 package com.example.sistemaalumnosv2.menu_screen.domain.insertgradecase
 
-import com.example.sistemaalumnosv2.menu_screen.data.ResourceMenu
 import com.example.sistemaalumnosv2.menu_screen.data.model.TermData
 import com.example.sistemaalumnosv2.menu_screen.data.network.insertgrade.GradeStudentRepository
 import com.example.sistemaalumnosv2.vo.Resource
@@ -36,25 +35,25 @@ class GradeStudentUseCaseTest{
     fun `use case grade student return success`()= runBlocking {
         //Given
         val termData = TermData(firstTerm, secondTerm, thirdTerm)
-        coEvery { gradeStudentRepository.insertGrade(dni, firstTerm, secondTerm, thirdTerm, uid) } returns ResourceMenu.Success(termData)
+        coEvery { gradeStudentRepository.insertGrade(dni, firstTerm, secondTerm, thirdTerm, uid) } returns Resource.Success(termData)
 
         //When
         val response = gradeStudentUseCase.insertGrade(dni, firstTerm, secondTerm, thirdTerm, uid)
 
         //Then
-        assertTrue(response is ResourceMenu.Success)
-        assertEquals(termData, (response as ResourceMenu.Success).data)
+        assertTrue(response is Resource.Success)
+        assertEquals(termData, (response as Resource.Success).data)
     }
 
     @Test
     fun `use case grade student return failure`()= runBlocking {
         //Given
-        coEvery { gradeStudentRepository.insertGrade(dni, firstTerm, secondTerm, thirdTerm, uid) } returns ResourceMenu.Failure(Exception())
+        coEvery { gradeStudentRepository.insertGrade(dni, firstTerm, secondTerm, thirdTerm, uid) } returns Resource.Failure(Exception())
 
         //When
         val response = gradeStudentUseCase.insertGrade(dni, firstTerm, secondTerm, thirdTerm, uid)
 
         //Then
-        assertTrue(response is ResourceMenu.Failure)
+        assertTrue(response is Resource.Failure)
     }
 }

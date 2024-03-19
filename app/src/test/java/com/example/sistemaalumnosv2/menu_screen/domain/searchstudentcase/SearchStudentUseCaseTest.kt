@@ -1,6 +1,5 @@
 package com.example.sistemaalumnosv2.menu_screen.domain.searchstudentcase
 
-import com.example.sistemaalumnosv2.menu_screen.data.ResourceMenu
 import com.example.sistemaalumnosv2.menu_screen.data.model.DataStudent
 import com.example.sistemaalumnosv2.menu_screen.data.network.searchstudent.SearchStudentRepository
 import com.example.sistemaalumnosv2.vo.Resource
@@ -39,22 +38,22 @@ class SearchStudentUseCaseTest{
     fun `search student use case return success`() = runBlocking {
 
         val dataStudent = mutableListOf(DataStudent(dni, name, surname, year, firstTerm, secondTerm, thirdTerm))
-        coEvery { searchStudentRepository.searchStudent(uid) } returns ResourceMenu.Success(dataStudent)
+        coEvery { searchStudentRepository.searchStudent(uid) } returns Resource.Success(dataStudent)
 
         val response = searchStudentUseCase.searchStudent(uid)
 
-        assertTrue(response is ResourceMenu.Success)
-        assertEquals(dataStudent, (response as ResourceMenu.Success).data)
+        assertTrue(response is Resource.Success)
+        assertEquals(dataStudent, (response as Resource.Success).data)
     }
 
     @Test
     fun `search student use case return failure`() = runBlocking {
 
-        coEvery { searchStudentRepository.searchStudent(uid) } returns ResourceMenu.Failure(Exception())
+        coEvery { searchStudentRepository.searchStudent(uid) } returns Resource.Failure(Exception())
 
         val response = searchStudentUseCase.searchStudent(uid)
 
-        assertTrue(response is ResourceMenu.Failure)
+        assertTrue(response is Resource.Failure)
 
     }
 }

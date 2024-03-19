@@ -48,17 +48,6 @@ class SearchGradeUseCaseTest{
         assertEquals(gradeStudent, (response as Resource.Success).data)
     }
 
-    @Test
-    fun `search grade use case return loading`() = runBlocking {
-
-
-        coEvery { searchGradeRepository.getGradeStudent(dni, uid) } returns Resource.Loading()
-
-        val response = searchGradeUseCase.getGradeStudent(dni, uid)
-
-        assertTrue(response is Resource.Loading)
-
-    }
 
     @Test
     fun `search grade use case return failure`() = runBlocking {
