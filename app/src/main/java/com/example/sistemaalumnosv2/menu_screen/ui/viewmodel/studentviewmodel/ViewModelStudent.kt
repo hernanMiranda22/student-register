@@ -23,7 +23,7 @@ class ViewModelStudent @Inject constructor(private val insertUseCase: InsertUseC
         get() = _isLoading
 
     private val _exception = MutableLiveData<Exception>()
-    val userException :LiveData<Exception>
+    val exception :LiveData<Exception>
         get() = _exception
 
     fun insertNewStudent(dni:Int, name:String, surname:String, year:String, idUser: String){

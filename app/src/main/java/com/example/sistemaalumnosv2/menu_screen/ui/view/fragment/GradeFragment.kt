@@ -106,7 +106,7 @@ class GradeFragment : Fragment() {
                 }
             }
 
-            viewModelGrade.userException.observe(viewLifecycleOwner){
+            viewModelGrade.exception.observe(viewLifecycleOwner){
                 Log.e("ERROR DATA", "$it")
             }
         }
@@ -145,7 +145,7 @@ class GradeFragment : Fragment() {
                 }
             }
 
-            viewModelGrade.userException.observe(viewLifecycleOwner){
+            viewModelGrade.exception.observe(viewLifecycleOwner){
                 Log.e("ERROR INSERT", "$it")
             }
         }

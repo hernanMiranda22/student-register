@@ -29,7 +29,7 @@ class ViewModelGrade @Inject constructor(private val searchGradeUseCase: SearchG
         get() = _isLoading
 
     private val _exception = MutableLiveData<Exception>()
-    val userException :LiveData<Exception>
+    val exception :LiveData<Exception>
         get() = _exception
 
     fun getDataAndTerm(dni:Int, uid: String){

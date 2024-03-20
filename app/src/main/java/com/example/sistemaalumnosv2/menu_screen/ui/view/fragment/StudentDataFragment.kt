@@ -127,7 +127,7 @@ class StudentDataFragment : Fragment() {
                     }
                 }
 
-                viewModelStudent.userException.observe(viewLifecycleOwner){
+                viewModelStudent.exception.observe(viewLifecycleOwner){
                     Log.e("Error Student","$it")
                 }
             }

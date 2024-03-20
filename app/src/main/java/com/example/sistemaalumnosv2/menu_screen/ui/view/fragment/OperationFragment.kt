@@ -85,7 +85,7 @@ class OperationFragment : Fragment() {
             }
         }
 
-        viewModelOperation.userException.observe(viewLifecycleOwner){result ->
+        viewModelOperation.exception.observe(viewLifecycleOwner){result ->
             Log.e("ERROR LOAD", "$result")
         }
 
@@ -108,7 +108,7 @@ class OperationFragment : Fragment() {
             }
         }
 
-        viewModelOperation.userException.observe(viewLifecycleOwner){result ->
+        viewModelOperation.exception.observe(viewLifecycleOwner){result ->
             Log.e("ERROR RELOAD", "$result")
         }
     }

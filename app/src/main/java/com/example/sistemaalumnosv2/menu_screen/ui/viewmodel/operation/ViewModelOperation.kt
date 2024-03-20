@@ -23,7 +23,7 @@ class ViewModelOperation @Inject constructor(private val searchStudentUseCase: S
         get() = _isLoading
 
     private val _exception = MutableLiveData<Exception>()
-    val userException :LiveData<Exception>
+    val exception :LiveData<Exception>
         get() = _exception
 
     fun searchDataStudent(uid : String){
