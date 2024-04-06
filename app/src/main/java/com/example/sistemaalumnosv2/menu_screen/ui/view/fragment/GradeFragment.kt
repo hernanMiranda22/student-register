@@ -165,15 +165,6 @@ class GradeFragment : Fragment() {
         gradeAdapter.notifyDataSetChanged()
     }
 
-    private fun hideProgressBar() {
-        binding.piTerm.visibility = View.GONE
-    }
-
-
-    private fun showProgressBar() {
-        binding.piTerm.visibility = View.VISIBLE
-    }
-
     private fun setBias(bias : Float){
         val constrainGrade = binding.constrainGrade
         val constrainSet = ConstraintSet()

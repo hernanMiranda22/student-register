@@ -10,7 +10,7 @@ class SignInUserRepository @Inject constructor() {
      suspend fun signInWithEmail(email: String, password: String): Resource<User> {
         val signInUser = FirebaseAuth.getInstance()
 
-        val signIn = signInUser.signInWithEmailAndPassword(email, password).await()
+         signInUser.signInWithEmailAndPassword(email, password).await()
 
         return Resource.Success(User(email, password))
     }

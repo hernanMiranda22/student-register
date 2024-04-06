@@ -11,8 +11,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.view.isVisible
-import androidx.fragment.app.commit
-import androidx.fragment.app.replace
 import androidx.fragment.app.viewModels
 import com.example.sistemaalumnosv2.R
 import com.example.sistemaalumnosv2.login_screen.data.model.ProviderType
@@ -38,7 +36,7 @@ class SingInFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
        _binding = FragmentSignInBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -105,10 +103,10 @@ class SingInFragment : Fragment() {
     }
 
     private fun onSignInResult(result: FirebaseAuthUIAuthenticationResult) {
-        val response = result.idpResponse
+        result.idpResponse
         if (result.resultCode == RESULT_OK) {
             // Successfully signed in
-            val user = FirebaseAuth.getInstance().currentUser
+            FirebaseAuth.getInstance().currentUser
             val intent = Intent(activity as LoginActivity, MenuActivity::class.java)
             startActivity(intent)
         }

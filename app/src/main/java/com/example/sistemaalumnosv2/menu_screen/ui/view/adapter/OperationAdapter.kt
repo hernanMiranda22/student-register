@@ -59,6 +59,7 @@ class OperationAdapter(private var student : MutableList<DataStudent>, context:C
         }
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     fun filterStudent(student : MutableList<DataStudent>){
         this.student = student
         notifyDataSetChanged()

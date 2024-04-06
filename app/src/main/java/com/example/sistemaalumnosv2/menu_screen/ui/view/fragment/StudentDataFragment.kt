@@ -3,6 +3,7 @@ package com.example.sistemaalumnosv2.menu_screen.ui.view.fragment
 import android.content.Intent
 import android.os.Bundle
 import android.text.InputFilter
+import android.text.InputType
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -38,7 +39,7 @@ class StudentDataFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // Inflate the layout for this fragment
         _binding = FragmentStudenDataBinding.inflate(inflater, container, false)
         return binding.root
@@ -160,4 +161,5 @@ class StudentDataFragment : Fragment() {
         nameEditText.filters = arrayOf(filter)
         surnameEditText.filters = arrayOf(filter)
     }
+
 }

@@ -1,14 +1,12 @@
 package com.example.sistemaalumnosv2.menu_screen.ui.view.fragment
 
 import android.annotation.SuppressLint
-import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.core.widget.addTextChangedListener
@@ -41,7 +39,7 @@ class OperationFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentOperationBinding.inflate(inflater, container, false)
         // Inflate the layout for this fragment
         return binding.root
@@ -122,7 +120,7 @@ class OperationFragment : Fragment() {
 
     //Inicialización del RecyclerView
     private fun initRecyclerView() {
-        adapter = OperationAdapter(itemAdapter, activity as MenuActivity,)
+        adapter = OperationAdapter(itemAdapter, activity as MenuActivity)
         binding.rvCardStudent.layoutManager = LinearLayoutManager(activity as MenuActivity)
         binding.rvCardStudent.adapter = adapter
 
@@ -133,12 +131,4 @@ class OperationFragment : Fragment() {
             }
         })
     }
-
-    private fun hideKeyboard() {
-        if (view != null){
-            val imm = this.context?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-            imm.hideSoftInputFromWindow(binding.viewOperation.windowToken, 0)
-        }
-    }
-
 }

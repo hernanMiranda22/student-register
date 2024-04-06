@@ -5,7 +5,6 @@ import android.os.Bundle
 import androidx.viewpager2.widget.ViewPager2
 import com.example.sistemaalumnosv2.databinding.ActivityLoginBinding
 import com.example.sistemaalumnosv2.login_screen.ui.view.adapter.LoginAdapter
-import com.example.sistemaalumnosv2.menu_screen.ui.view.adapter.ViewAdapter
 import com.google.android.material.tabs.TabLayout
 import dagger.hilt.android.AndroidEntryPoint
 

@@ -3,13 +3,11 @@ package com.example.sistemaalumnosv2.login_screen.ui.viewmodel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.liveData
 import androidx.lifecycle.viewModelScope
 import com.example.sistemaalumnosv2.login_screen.data.model.User
 import com.example.sistemaalumnosv2.login_screen.domain.signupcase.SignUpUserCase
 import com.example.sistemaalumnosv2.vo.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
