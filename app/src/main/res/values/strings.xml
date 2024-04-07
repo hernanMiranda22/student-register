@@ -9,6 +9,7 @@
     <string name="bottom_user">Usuario</string>
 
     <string name="description_icon_add">PersonAddIcon</string>
+    <string name="description_icon_signOut">IconSignOut</string>
 
     <string name="tabItem_signIn">Iniciar Sesion</string>
     <string name="tabItem_signUp">Crear cuenta</string>

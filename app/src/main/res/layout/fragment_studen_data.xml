@@ -20,7 +20,7 @@
         app:layout_constraintVertical_bias="0"
         app:layout_constraintHorizontal_bias="0"
         android:src="@drawable/ic_signout"
-        android:contentDescription="icon" />
+        android:contentDescription="@string/description_icon_signOut" />
 
     <ImageView
         android:id="@+id/ivIconAdd"
@@ -106,7 +106,8 @@
             android:id="@+id/etSurname"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:maxLength="20" />
+            android:maxLength="20"
+            android:inputType="textCapSentences"/>
 
     </com.google.android.material.textfield.TextInputLayout>
 
