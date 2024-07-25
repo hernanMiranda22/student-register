@@ -109,6 +109,8 @@ class SingInFragment : Fragment() {
             FirebaseAuth.getInstance().currentUser
             val intent = Intent(activity as LoginActivity, MenuActivity::class.java)
             startActivity(intent)
+        }else{
+            Toast.makeText(activity as LoginActivity, "Error", Toast.LENGTH_SHORT).show()
         }
     }
 
