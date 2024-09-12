@@ -18,30 +18,30 @@ class LoginActivity : AppCompatActivity() {
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val loginAdapter = LoginAdapter(this)
-        binding.vpContainerLogin.adapter = loginAdapter
-
-        binding.tlLogin.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
-
-            override fun onTabSelected(tab: TabLayout.Tab?) {
-                binding.vpContainerLogin.currentItem = tab!!.position
-            }
-
-            override fun onTabReselected(tab: TabLayout.Tab?) {
-                // Handle tab reselect
-            }
-
-            override fun onTabUnselected(tab: TabLayout.Tab?) {
-                // Handle tab unselect
-            }
-        })
-
-        binding.vpContainerLogin.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback(){
-            override fun onPageSelected(position: Int) {
-                super.onPageSelected(position)
-                binding.tlLogin.getTabAt(position)?.select()
-            }
-        })
+//        val loginAdapter = LoginAdapter(this)
+//        binding.vpContainerLogin.adapter = loginAdapter
+//
+//        binding.tlLogin.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
+//
+//            override fun onTabSelected(tab: TabLayout.Tab?) {
+//                binding.vpContainerLogin.currentItem = tab!!.position
+//            }
+//
+//            override fun onTabReselected(tab: TabLayout.Tab?) {
+//                // Handle tab reselect
+//            }
+//
+//            override fun onTabUnselected(tab: TabLayout.Tab?) {
+//                // Handle tab unselect
+//            }
+//        })
+//
+//        binding.vpContainerLogin.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback(){
+//            override fun onPageSelected(position: Int) {
+//                super.onPageSelected(position)
+//                binding.tlLogin.getTabAt(position)?.select()
+//            }
+//        })
 
 //        supportFragmentManager.commit {
 //            setReorderingAllowed(true)

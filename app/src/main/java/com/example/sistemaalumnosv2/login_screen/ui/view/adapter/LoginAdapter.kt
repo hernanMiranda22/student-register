@@ -4,7 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.example.sistemaalumnosv2.login_screen.ui.view.fragment.SignUpFragment
-import com.example.sistemaalumnosv2.login_screen.ui.view.fragment.SingInFragment
+import com.example.sistemaalumnosv2.login_screen.ui.view.fragment.SignInFragment
 
 class LoginAdapter(activity: AppCompatActivity) : FragmentStateAdapter(activity) {
     override fun getItemCount(): Int {
@@ -13,9 +13,9 @@ class LoginAdapter(activity: AppCompatActivity) : FragmentStateAdapter(activity)
 
     override fun createFragment(position: Int): Fragment {
         return when(position){
-            0 -> SingInFragment()
+            0 -> SignInFragment()
             1 -> SignUpFragment()
-            else -> SingInFragment()
+            else -> SignInFragment()
         }
     }
 }

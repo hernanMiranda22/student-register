@@ -12,6 +12,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.example.sistemaalumnosv2.R
 import com.example.sistemaalumnosv2.login_screen.data.model.ProviderType
 import com.example.sistemaalumnosv2.databinding.FragmentSignInBinding
@@ -26,7 +27,7 @@ import com.google.firebase.auth.FirebaseAuth
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class SingInFragment : Fragment() {
+class SignInFragment : Fragment() {
 
     private var _binding : FragmentSignInBinding? = null
     private val binding get() = _binding!!
@@ -47,8 +48,17 @@ class SingInFragment : Fragment() {
             observerSignIn()
         }
 
+        toCreateAccountFragment()
+
         checkGoogleAccount()
     }
+
+    private fun toCreateAccountFragment(){
+        binding.tvCreateAccount.setOnClickListener {
+            findNavController().navigate(R.id.action_signInFragment_to_signUpFragment)
+        }
+    }
+
 
     private fun observerSignIn() {
         val email = binding.etEmailSignIn.text.toString()

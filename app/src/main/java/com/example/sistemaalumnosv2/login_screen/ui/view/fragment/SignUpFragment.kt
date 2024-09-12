@@ -8,8 +8,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.activity.addCallback
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.example.sistemaalumnosv2.R
 import com.example.sistemaalumnosv2.databinding.FragmentSignUpBinding
 import com.example.sistemaalumnosv2.login_screen.ui.view.activity.LoginActivity
@@ -39,6 +41,8 @@ class SignUpFragment : Fragment() {
             observerSignUp()
 
         }
+
+        toBackNavigate()
     }
 
     private fun observerSignUp() {
@@ -96,6 +100,12 @@ class SignUpFragment : Fragment() {
         binding.etConfirmSingUp.setText("")
 
         val email = binding.etEmailSignUp
+    }
+
+    private fun toBackNavigate(){
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner){
+            findNavController().navigate(R.id.action_signUpFragment_to_signInFragment)
+        }
     }
 
 }
