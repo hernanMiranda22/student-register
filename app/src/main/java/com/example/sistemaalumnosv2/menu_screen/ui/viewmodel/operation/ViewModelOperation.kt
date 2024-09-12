@@ -6,8 +6,13 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.sistemaalumnosv2.menu_screen.data.model.DataStudent
 import com.example.sistemaalumnosv2.menu_screen.domain.searchstudentcase.SearchStudentUseCase
+import com.example.sistemaalumnosv2.menu_screen.ui.model.ResourceMenu
 import com.example.sistemaalumnosv2.vo.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -18,6 +23,7 @@ class ViewModelOperation @Inject constructor(private val searchStudentUseCase: S
     val studentDataModel : LiveData<Resource<MutableList<DataStudent>>>
         get() = _studentDataModel
 
+
     private val _isLoading = MutableLiveData<Boolean>()
     val isLoading : LiveData<Boolean>
         get() = _isLoading
@@ -26,18 +32,35 @@ class ViewModelOperation @Inject constructor(private val searchStudentUseCase: S
     val exception :LiveData<Exception>
         get() = _exception
 
-    fun searchDataStudent(uid : String){
+
+    private val _listStudent = MutableStateFlow<ResourceMenu>(
+        ResourceMenu.Loading
+    )
+
+    val listStudent : StateFlow<ResourceMenu> = _listStudent.asStateFlow()
+
+    fun getDataStudent(uid : String){
         viewModelScope.launch {
-             _isLoading.postValue(true)
-            when(val result = searchStudentUseCase.searchStudent(uid)){
-                is Resource.Success -> {
-                    _studentDataModel.postValue(result)
-                }
-                is Resource.Failure ->{
-                    _exception.postValue(result.exception)
-                }
+            searchStudentUseCase.getAllStudents(uid).collect{ list ->
+                _listStudent.update { ResourceMenu.Success(list) }
             }
-            _isLoading.postValue(false)
+
         }
     }
+
+
+//    fun searchDataStudent(uid : String){
+//        viewModelScope.launch {
+//             _isLoading.postValue(true)
+//            when(val result = searchStudentUseCase.searchStudent(uid)){
+//                is Resource.Success -> {
+//                    _studentDataModel.postValue(result)
+//                }
+//                is Resource.Failure ->{
+//                    _exception.postValue(result.exception)
+//                }
+//            }
+//            _isLoading.postValue(false)
+//        }
+//    }
 }

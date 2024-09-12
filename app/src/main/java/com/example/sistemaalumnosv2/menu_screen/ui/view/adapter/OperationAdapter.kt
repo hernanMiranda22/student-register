@@ -10,8 +10,9 @@ import com.example.sistemaalumnosv2.R
 import com.example.sistemaalumnosv2.menu_screen.data.model.DataStudent
 
 import com.example.sistemaalumnosv2.databinding.CardViewStudentBinding
+import com.example.sistemaalumnosv2.menu_screen.ui.model.DataStudentUI
 
-class OperationAdapter(private var student : MutableList<DataStudent>, context:Context): RecyclerView.Adapter<OperationAdapter.ViewHolder>() {
+class OperationAdapter(private var student : MutableList<DataStudentUI>, context:Context): RecyclerView.Adapter<OperationAdapter.ViewHolder>() {
 
     private var onClickListener: OnClickListener? = null
 
@@ -27,7 +28,7 @@ class OperationAdapter(private var student : MutableList<DataStudent>, context:C
         private val binding = CardViewStudentBinding.bind(view)
 
         @SuppressLint("SetTextI18n")
-        fun bind(student : DataStudent){
+        fun bind(student : DataStudentUI){
             val averageGrade : Float = ((student.firstTerm + student.secondTerm + student.thirdTerm) / 3).toFloat()
             binding.tvDni.text = "DNI: "+student.dni.toString()
             binding.tvSurname.text = "Apellido:" +student.surname
@@ -60,7 +61,7 @@ class OperationAdapter(private var student : MutableList<DataStudent>, context:C
     }
 
     @SuppressLint("NotifyDataSetChanged")
-    fun filterStudent(student : MutableList<DataStudent>){
+    fun filterStudent(student : MutableList<DataStudentUI>){
         this.student = student
         notifyDataSetChanged()
     }
