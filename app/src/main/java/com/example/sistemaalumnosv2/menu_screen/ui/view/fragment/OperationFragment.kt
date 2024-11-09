@@ -57,14 +57,14 @@ class OperationFragment : Fragment() {
 
         initRecyclerView()
 
-        loadStudent()
+        //loadStudent()
 
         filterList()
 
-//        binding.srContainer.setOnRefreshListener {
-//            reLoadStudent()
-//            binding.srContainer.isRefreshing = false
-//        }
+        binding.srContainer.setOnRefreshListener {
+            reLoadStudent()
+            binding.srContainer.isRefreshing = false
+        }
     }
 
     @SuppressLint("NotifyDataSetChanged")
@@ -94,52 +94,34 @@ class OperationFragment : Fragment() {
 
         viewModelOperation.getDataStudent(uid = auth.uid.toString())
 
-//        viewModelOperation.searchDataStudent(auth.uid.toString())
-//
-//        viewModelOperation.isLoading.observe(viewLifecycleOwner){
-//            binding.piListStudent.isVisible = it
-//        }
-//
-//        viewModelOperation.studentDataModel.observe(viewLifecycleOwner) {list ->
-//            when(list){
-//                is Resource.Success -> {
-//                    itemAdapter.clear()
-//                    itemAdapter.addAll(list.data)
-//                    adapter.notifyDataSetChanged()
-//                }
-//                is Resource.Failure -> {
-//                    Toast.makeText(activity as MenuActivity, "Error al cargar", Toast.LENGTH_SHORT).show()
-//                }
-//            }
-//        }
-//
-//        viewModelOperation.exception.observe(viewLifecycleOwner){result ->
-//            Log.e("ERROR LOAD", "$result")
-//        }
-
     }
 
-//    @SuppressLint("NotifyDataSetChanged")
-//    private fun reLoadStudent(){
-//        val auth = FirebaseAuth.getInstance()
-//        viewModelOperation.searchDataStudent(auth.uid.toString())
-//        viewModelOperation.studentDataModel.observe(viewLifecycleOwner) {list ->
-//            when(list){
-//                is Resource.Success -> {
-//                    itemAdapter.clear()
-//                    itemAdapter.addAll(list.data)
-//                    adapter.notifyDataSetChanged()
-//                }
-//                is Resource.Failure -> {
-//                    Toast.makeText(activity as MenuActivity, "Error al refrescar", Toast.LENGTH_SHORT).show()
-//                }
-//            }
-//        }
-//
-//        viewModelOperation.exception.observe(viewLifecycleOwner){result ->
-//            Log.e("ERROR RELOAD", "$result")
-//        }
-//    }
+    @SuppressLint("NotifyDataSetChanged")
+    private fun reLoadStudent(){
+        val auth = FirebaseAuth.getInstance()
+
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED){
+                viewModelOperation.listStudent.collect{uiState ->
+                    when(uiState){
+                        is ResourceMenu.Failure -> {
+                            Toast.makeText(activity as MenuActivity, "Error al refrescar", Toast.LENGTH_SHORT).show()
+                        }
+                        ResourceMenu.Loading -> {
+
+                        }
+                        is ResourceMenu.Success -> {
+                            itemAdapter.clear()
+                            itemAdapter.addAll(uiState.data)
+                            adapter.notifyDataSetChanged()
+                        }
+                    }
+
+                }
+            }
+        }
+        viewModelOperation.getDataStudent(auth.uid.toString())
+    }
 
     private fun filterList(){
         binding.etDniList.addTextChangedListener {
@@ -159,6 +141,13 @@ class OperationFragment : Fragment() {
             override fun onClick(position: Int, gradeStudent: Int) {
 
             }
-        })
+        }
+        )
     }
+
+//    override fun onStart() {
+//        super.onStart()
+//
+//        loadStudent()
+//    }
 }

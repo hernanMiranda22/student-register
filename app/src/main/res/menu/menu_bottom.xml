@@ -2,21 +2,21 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:id="@+id/btnInfoStudent"
+        android:id="@+id/fragmentStudentData"
         android:enabled="true"
         android:icon="@drawable/ic_person_add"
         android:title="@string/bottom_student"
         app:showAsAction="ifRoom" />
     <item
-        android:id="@+id/btnTermStudent"
+        android:id="@+id/gradeFragment"
         android:enabled="true"
         android:icon="@drawable/ic_grade_add"
         android:title="@string/bottom_grade"
         app:showAsAction="ifRoom" />
     <item
-        android:id="@+id/btnSearchStudent"
+        android:id="@+id/operationFragment"
         android:enabled="true"
-        android:icon="@drawable/ic_search"
+        android:icon="@drawable/ic_list"
         android:title="@string/bottom_search"
         app:showAsAction="ifRoom" />
 </menu>

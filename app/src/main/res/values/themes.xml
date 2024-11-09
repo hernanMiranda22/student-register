@@ -32,7 +32,7 @@
     <style name="Theme.SistemaAlumnosV2" parent="Base.Theme.SistemaAlumnosV2" />
 
     <style name="BottomNavigationStyle" parent="Base.Theme.SistemaAlumnosV2">
-        <item name="android:background">@color/md_theme_light_secondary</item>
+        <item name="android:background">@color/seed</item>
         <item name="itemTextColor">@color/md_theme_light_onPrimary</item>
         <item name="itemIconTint">@color/md_theme_light_onPrimary</item>
     </style>

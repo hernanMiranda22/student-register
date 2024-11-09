@@ -15,7 +15,7 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.example.sistemaalumnosv2.R
-import com.example.sistemaalumnosv2.databinding.FragmentStudenDataBinding
+import com.example.sistemaalumnosv2.databinding.FragmentStudentDataBinding
 import com.example.sistemaalumnosv2.login_screen.ui.view.activity.LoginActivity
 import com.example.sistemaalumnosv2.menu_screen.ui.view.activity.MenuActivity
 import com.example.sistemaalumnosv2.menu_screen.ui.viewmodel.studentviewmodel.ViewModelStudent
@@ -28,7 +28,7 @@ import dagger.hilt.android.AndroidEntryPoint
 class StudentDataFragment : Fragment() {
 
     //Declaracion del ViewBingin
-    private var _binding : FragmentStudenDataBinding? = null
+    private var _binding : FragmentStudentDataBinding? = null
     private val binding get() = _binding!!
 
     //Declaracion del ViewModel
@@ -41,7 +41,7 @@ class StudentDataFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         // Inflate the layout for this fragment
-        _binding = FragmentStudenDataBinding.inflate(inflater, container, false)
+        _binding = FragmentStudentDataBinding.inflate(inflater, container, false)
         return binding.root
     }
 
