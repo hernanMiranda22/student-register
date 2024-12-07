@@ -98,8 +98,6 @@ class SignUpFragment : Fragment() {
         binding.etEmailSignUp.setText("")
         binding.etPasswordSignUp.setText("")
         binding.etConfirmSingUp.setText("")
-
-        val email = binding.etEmailSignUp
     }
 
     private fun toBackNavigate(){

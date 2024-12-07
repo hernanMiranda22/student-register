@@ -23,6 +23,7 @@ import com.example.sistemaalumnosv2.menu_screen.ui.view.activity.MenuActivity
 import com.example.sistemaalumnosv2.menu_screen.ui.view.adapter.OperationAdapter
 import com.example.sistemaalumnosv2.menu_screen.ui.viewmodel.operation.ViewModelOperation
 import com.example.sistemaalumnosv2.vo.Resource
+import com.example.sistemaalumnosv2.vo.UserSingleton
 import com.google.firebase.auth.FirebaseAuth
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -57,71 +58,94 @@ class OperationFragment : Fragment() {
 
         initRecyclerView()
 
-        //loadStudent()
+        loadStudent()
 
         filterList()
 
         binding.srContainer.setOnRefreshListener {
-            reLoadStudent()
+            loadStudent()
             binding.srContainer.isRefreshing = false
         }
     }
 
     @SuppressLint("NotifyDataSetChanged")
     private fun loadStudent(){
-        val auth = FirebaseAuth.getInstance()
 
-        lifecycleScope.launch {
-            repeatOnLifecycle(Lifecycle.State.STARTED){
-                viewModelOperation.listStudent.collect{ uiState ->
-                    when(uiState){
-                        is ResourceMenu.Failure -> {
-                            Toast.makeText(activity as MenuActivity, "Error al obtener los estudiantes", Toast.LENGTH_SHORT).show()
-                        }
-                        ResourceMenu.Loading -> {
-                            binding.piListStudent.visibility = View.VISIBLE
-                        }
-                        is ResourceMenu.Success -> {
-                            binding.piListStudent.visibility = View.GONE
-                            itemAdapter.clear()
-                            itemAdapter.addAll(uiState.data)
-                            adapter.notifyDataSetChanged()
-                        }
-                    }
+        viewModelOperation.searchDataStudent(UserSingleton.getUserId())
+
+        viewModelOperation.isLoading.observe(viewLifecycleOwner){
+            binding.piListStudent.isVisible = it
+        }
+
+        viewModelOperation.studentDataModel.observe(viewLifecycleOwner) {list ->
+            when(list){
+                is ResourceMenu.Failure -> {
+                    Toast.makeText(activity as MenuActivity, "Error al obtener los estudiantes", Toast.LENGTH_SHORT).show()
+                }
+                ResourceMenu.Loading -> {
+                    binding.piListStudent.visibility = View.VISIBLE
+                }
+                is ResourceMenu.Success -> {
+                    binding.piListStudent.visibility = View.GONE
+                    itemAdapter.clear()
+                    itemAdapter.addAll(list.data)
+                    adapter.notifyDataSetChanged()
                 }
             }
         }
 
-        viewModelOperation.getDataStudent(uid = auth.uid.toString())
+//        val auth = FirebaseAuth.getInstance()
+//
+//        lifecycleScope.launch {
+//            repeatOnLifecycle(Lifecycle.State.STARTED){
+//                viewModelOperation.listStudent.collect{ uiState ->
+//                    when(uiState){
+//                        is ResourceMenu.Failure -> {
+//                            Toast.makeText(activity as MenuActivity, "Error al obtener los estudiantes", Toast.LENGTH_SHORT).show()
+//                        }
+//                        ResourceMenu.Loading -> {
+//                            binding.piListStudent.visibility = View.VISIBLE
+//                        }
+//                        is ResourceMenu.Success -> {
+//                            binding.piListStudent.visibility = View.GONE
+//                            itemAdapter.clear()
+//                            itemAdapter.addAll(uiState.data)
+//                            adapter.notifyDataSetChanged()
+//                        }
+//                    }
+//                }
+//            }
+//        }
+//
+//        viewModelOperation.getDataStudent(uid = auth.uid.toString())
 
     }
 
-    @SuppressLint("NotifyDataSetChanged")
-    private fun reLoadStudent(){
-        val auth = FirebaseAuth.getInstance()
-
-        lifecycleScope.launch {
-            repeatOnLifecycle(Lifecycle.State.STARTED){
-                viewModelOperation.listStudent.collect{uiState ->
-                    when(uiState){
-                        is ResourceMenu.Failure -> {
-                            Toast.makeText(activity as MenuActivity, "Error al refrescar", Toast.LENGTH_SHORT).show()
-                        }
-                        ResourceMenu.Loading -> {
-
-                        }
-                        is ResourceMenu.Success -> {
-                            itemAdapter.clear()
-                            itemAdapter.addAll(uiState.data)
-                            adapter.notifyDataSetChanged()
-                        }
-                    }
-
-                }
-            }
-        }
-        viewModelOperation.getDataStudent(auth.uid.toString())
-    }
+//    @SuppressLint("NotifyDataSetChanged")
+//    private fun reLoadStudent(){
+//        val auth = FirebaseAuth.getInstance()
+//
+//        lifecycleScope.launch {
+//            repeatOnLifecycle(Lifecycle.State.STARTED){
+//                viewModelOperation.listStudent.collect{uiState ->
+//                    when(uiState){
+//                        is ResourceMenu.Failure -> {
+//                            Toast.makeText(activity as MenuActivity, "Error al refrescar", Toast.LENGTH_SHORT).show()
+//                        }
+//                        ResourceMenu.Loading -> {
+//
+//                        }
+//                        is ResourceMenu.Success -> {
+//                            itemAdapter.clear()
+//                            itemAdapter.addAll(uiState.data)
+//                            adapter.notifyDataSetChanged()
+//                        }
+//                    }
+//
+//                }
+//            }
+//        }
+//    }
 
     private fun filterList(){
         binding.etDniList.addTextChangedListener {
@@ -141,13 +165,7 @@ class OperationFragment : Fragment() {
             override fun onClick(position: Int, gradeStudent: Int) {
 
             }
-        }
-        )
+        })
     }
 
-//    override fun onStart() {
-//        super.onStart()
-//
-//        loadStudent()
-//    }
 }

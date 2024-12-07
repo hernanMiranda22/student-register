@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.sistemaalumnosv2.menu_screen.data.model.DataStudent
 import com.example.sistemaalumnosv2.menu_screen.domain.searchstudentcase.SearchStudentUseCase
+import com.example.sistemaalumnosv2.menu_screen.ui.model.DataStudentUI
 import com.example.sistemaalumnosv2.menu_screen.ui.model.ResourceMenu
 import com.example.sistemaalumnosv2.vo.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -19,8 +20,8 @@ import javax.inject.Inject
 @HiltViewModel
 class ViewModelOperation @Inject constructor(private val searchStudentUseCase: SearchStudentUseCase):ViewModel() {
 
-    private val _studentDataModel = MutableLiveData<Resource<MutableList<DataStudent>>>()
-    val studentDataModel : LiveData<Resource<MutableList<DataStudent>>>
+    private val _studentDataModel = MutableLiveData<ResourceMenu>()
+    val studentDataModel : LiveData<ResourceMenu>
         get() = _studentDataModel
 
 
@@ -39,18 +40,28 @@ class ViewModelOperation @Inject constructor(private val searchStudentUseCase: S
 
     val listStudent : StateFlow<ResourceMenu> = _listStudent.asStateFlow()
 
-    fun getDataStudent(uid : String){
+//    fun getDataStudent(uid : String){
+//        viewModelScope.launch {
+//            searchStudentUseCase.getAllStudents(uid).collect{ list ->
+//                _listStudent.update { ResourceMenu.Success(list) }
+//            }
+//
+//        }
+//    }
+
+
+    fun searchDataStudent(uid : String){
         viewModelScope.launch {
-            searchStudentUseCase.getAllStudents(uid).collect{ list ->
-                _listStudent.update { ResourceMenu.Success(list) }
+
+            when(val result = searchStudentUseCase.searchStudent(uid)){
+                is Resource.Failure -> {
+                    _studentDataModel.value = ResourceMenu.Failure(result.exception)
+                }
+                is Resource.Success -> {
+                    _studentDataModel.value = ResourceMenu.Success(result.data)
+                }
             }
 
-        }
-    }
-
-
-//    fun searchDataStudent(uid : String){
-//        viewModelScope.launch {
 //             _isLoading.postValue(true)
 //            when(val result = searchStudentUseCase.searchStudent(uid)){
 //                is Resource.Success -> {
@@ -61,6 +72,6 @@ class ViewModelOperation @Inject constructor(private val searchStudentUseCase: S
 //                }
 //            }
 //            _isLoading.postValue(false)
-//        }
-//    }
+        }
+    }
 }
