@@ -23,5 +23,5 @@ Los docentes podran consultar todos sus alumnos listados y podra filtrarlos por 
 
 ##  Contacto
 [![Static Badge](https://img.shields.io/badge/Hern%C3%A1n%20Miranda-2B4FFF?style=for-the-badge&logo=linkedin&logoColor=FFFFFF&labelColor=000000)
-](https://www.linkedin.com/in/hern%C3%A1n-miranda/)
+](https://www.linkedin.com/in/hern%C3%A1n-miranda-557711342/)
 
